@@ -8,9 +8,23 @@ import (
 	"github.com/michimani/gotwi/fields"
 	"github.com/michimani/gotwi/user/userlookup"
 	"github.com/michimani/gotwi/user/userlookup/types"
+
+	"os"
+
+	"github.com/joho/godotenv"
 )
 
 func main() {
+
+	// Set Twitter API Key
+	err := godotenv.Load("../.env")
+	if err != nil {
+		panic(err)
+	}
+
+	os.Getenv("TWITTER_API_KEY")
+	os.Getenv("TWITTER_API_SECRET_KEY")
+
 	c, err := gotwi.NewClient(&gotwi.NewClientInput{
 		AuthenticationMethod: gotwi.AuthenMethodOAuth2BearerToken,
 	})
