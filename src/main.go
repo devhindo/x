@@ -1,13 +1,16 @@
 package main
 
 import (
-	"context"
+	//"context"
+	"crypto/rand"
+	"encoding/base64"
 	"fmt"
 
-	"github.com/michimani/gotwi"
-	"github.com/michimani/gotwi/fields"
-	"github.com/michimani/gotwi/user/userlookup"
-	"github.com/michimani/gotwi/user/userlookup/types"
+	//"github.com/michimani/gotwi"
+	//"github.com/michimani/gotwi/fields"
+	//"github.com/michimani/gotwi/user/userlookup"
+	//"github.com/michimani/gotwi/user/userlookup/types"
+	//"golang.org/x/tools/godoc/redirect"
 
 	"os"
 
@@ -22,43 +25,37 @@ func main() {
 		panic(err)
 	}
 
-	os.Getenv("TWITTER_API_KEY")
-	os.Getenv("TWITTER_API_SECRET_KEY")
+	client_id := os.Getenv("CLIENT_ID")	
 
-	c, err := gotwi.NewClient(&gotwi.NewClientInput{
-		AuthenticationMethod: gotwi.AuthenMethodOAuth2BearerToken,
-	})
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+	auth_url := ""
+	auth_scopes := "tweet.read%20users.read%20follows.read%20follows.write%20offline.access"
+	redirect_url := "https://github.com/devhindo/x"
+	
+	auth_url += "https://twitter.com/i/oauth2/authorize?response_type=code&client_id="
+	auth_url += client_id
+	auth_url += "&redirect_uri=" + redirect_url
+	
+	auth_url += "&scope=" + auth_scopes
+	
+	code_challenge := generateRandomString(12)
+	state := generateRandomString(12)
+	auth_url += "&state=" + state + "&code_challenge=" + code_challenge + "&code_challenge_method=plain"
 
-	p := &types.GetByUsernameInput{
-		Username: "michimani210",
-		Expansions: fields.ExpansionList{
-			fields.ExpansionPinnedTweetID,
-		},
-		UserFields: fields.UserFieldList{
-			fields.UserFieldCreatedAt,
-		},
-		TweetFields: fields.TweetFieldList{
-			fields.TweetFieldCreatedAt,
-		},
-	}
+	fmt.Println(auth_url)
 
-	u, err := userlookup.GetByUsername(context.Background(), c, p)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+	//os.Getenv("TWITTER_API_KEY")
+	//os.Getenv("TWITTER_API_SECRET_KEY")
 
-	fmt.Println("ID:          ", gotwi.StringValue(u.Data.ID))
-	fmt.Println("Name:        ", gotwi.StringValue(u.Data.Name))
-	fmt.Println("Username:    ", gotwi.StringValue(u.Data.Username))
-	fmt.Println("CreatedAt:   ", u.Data.CreatedAt)
-	if u.Includes.Tweets != nil {
-		for _, t := range u.Includes.Tweets {
-			fmt.Println("PinnedTweet: ", gotwi.StringValue(t.Text))
-		}
-	}
+	
 }
+
+func generateRandomString(length int) string {
+	b := make([]byte, length)
+	_, err := rand.Read(b)
+	if err != nil {
+	   panic(err)
+	}
+	// return only characters in base64 alphabet, removes characters that are not url safe
+	return base64.RawURLEncoding.EncodeToString(b)
+ }
+ 
