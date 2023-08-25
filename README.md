@@ -1,2 +1,3 @@
-<h1 align="center">doodle</h1>
-<p align="center"></p>
+<h1 align="center">X (CLI)</h1>
+
+<i>interact with x api and perform tasks like posting tweets or whatever</i>
