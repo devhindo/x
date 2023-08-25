@@ -28,7 +28,7 @@ func main() {
 	client_id := os.Getenv("CLIENT_ID")	
 
 	auth_url := ""
-	auth_scopes := "tweet.read%20users.read%20follows.read%20follows.write%20offline.access"
+	auth_scopes := "tweet.read%20tweet.write%20users.read%20users.read%20follows.read%20follows.write%20offline.access"
 	redirect_url := "https://github.com/devhindo/x"
 	
 	auth_url += "https://twitter.com/i/oauth2/authorize?response_type=code&client_id="
