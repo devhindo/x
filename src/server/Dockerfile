@@ -8,7 +8,7 @@ COPY . /server
 
 WORKDIR /server
 
-RUN go mod download
+RUN go get -u github.com/gofiber/fiber/v2
 
 # expose port 3000
 
