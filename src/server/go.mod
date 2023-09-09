@@ -1,6 +1,6 @@
 module github.com/devhindo/x/src/server
 
-go 1.21
+go 1.21.0
 
 require (
 	github.com/andybalholm/brotli v1.0.5 // indirect
