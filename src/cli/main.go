@@ -25,7 +25,7 @@ import (
 func main() {
 
 	// Set Twitter API Key
-	err := godotenv.Load("../.env")
+	err := godotenv.Load("../../.env")
 	if err != nil {
 		panic(err)
 	}
