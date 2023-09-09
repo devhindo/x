@@ -5,9 +5,9 @@ name: go-server
 
 on:
   push:
-    branches: [ "server" ]
+    branches: [ "server", "main" ]
   pull_request:
-    branches: [ "server" ]
+    branches: [ "server", "main" ]
 
 jobs:
 
