@@ -4,7 +4,7 @@ SHELL ["/bin/bash", "-c"]
 
 RUN mkdir /x
 
-COPY ./src /x
+COPY ./src/cli /x
 
 WORKDIR /x
 
