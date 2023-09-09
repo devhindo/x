@@ -1,4 +1,4 @@
-module github.com/devhindo/x
+module github.com/devhindo/x/src/cli
 
 go 1.21.0
 
