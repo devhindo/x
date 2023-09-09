@@ -8,8 +8,6 @@ COPY . /server
 
 WORKDIR /server
 
-RUN go mod tidy
-RUN go mod download
 
 # expose port 3000
 
