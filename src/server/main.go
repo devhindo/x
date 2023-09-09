@@ -12,5 +12,5 @@ func main() {
         return c.SendString("Hello, World 👋!")
     })
 
-    server.Listen(":10000")
+    server.Listen(":3000")
 }
