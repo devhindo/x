@@ -7,7 +7,6 @@ import (
 
 func main() {
 	server := fiber.New()
-	fmt.Println("Hello, xCLI 👋!")
 	server.Get("/", func(c *fiber.Ctx) error {
 		fmt.Println("Hello, xCLI 👋!")
         return c.SendString("Hello, World 👋!")
