@@ -1,20 +1,15 @@
 FROM golang:1.20
 
-SHELL ["/bin/bash", "-c"]
-
 RUN mkdir /server
 
 COPY . /server
 
-WORKDIR /server
+#WORKDIR /server
 
-RUN go mod tidy
-RUN go mod download
-
-# expose port 3000
+RUN go build -o main .
 
 EXPOSE 8080
 
-CMD ["go", "run", "main.go"]
+CMD ["/server/main"]
 
 # cmd : docker build -t devhindo/xcli:v1.0 . && docker container run -it --name xcli-server -p 3000:3000 devhindo/xcli:v1.0
