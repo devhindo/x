@@ -1,25 +1,14 @@
 package main
 
 import (
-	//"context"
-	"context"
+
 	"crypto/rand"
 	"encoding/base64"
-	"fmt"
-	"log"
-	"net/http"
-
-	//"github.com/michimani/gotwi"
-	//"github.com/michimani/gotwi/fields"
-	//"github.com/michimani/gotwi/user/userlookup"
-	//"github.com/michimani/gotwi/user/userlookup/types"
-	//"golang.org/x/tools/godoc/redirect"
 
 	"os"
 
 	"github.com/joho/godotenv"
-	"golang.ngrok.com/ngrok"
-	"golang.ngrok.com/ngrok/config"
+
 )
 
 func main() {
@@ -30,55 +19,25 @@ func main() {
 		panic(err)
 	}
 
+	os.Getenv("TWITTER_API_KEY")
+	os.Getenv("TWITTER_API_SECRET_KEY")
 
-	
+	// construct url
 
-	//os.Getenv("TWITTER_API_KEY")
-	//os.Getenv("TWITTER_API_SECRET_KEY")
-	ngrok_error, tun_URL := run(context.Background())
-	if ngrok_error != nil {
-		log.Fatal(err)
-	}
-	log.Println(tun_URL)
-	log.Println(tun_URL)
-	log.Println(tun_URL)
-	log.Println(tun_URL)
-	log.Println(tun_URL)
-	// get the ngrok url
+	redirect_url := "https://x-blush.vercel.app/verification/api"
 
-	
+	auth_url := construct_auth_url(redirect_url)
+
+	print(auth_url)
 
 
-	
-
-}
-
-func run(ctx context.Context) (error, string) {
-	authToken := os.Getenv("NGROK_AUTHTOKEN")
-	tun, err := ngrok.Listen(ctx,
-		config.HTTPEndpoint(),
-		ngrok.WithAuthtoken(authToken),
-		// todo set ngrok-skip-browser-warning to anyvalue
-	)
-	if err != nil {
-		return err, ""
-	}
-	
-	log.Println("tunnel created:", tun.URL())
-
-	construct_auth_url(tun.URL())
-
-	return http.Serve(tun, http.HandlerFunc(handler)), tun.URL()
-}
-
-func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Hello from ngrok-go!")
 }
 
 
 
 
-func construct_auth_url(redirect_url string) {
+
+func construct_auth_url(redirect_url string) string {
 	auth_url := ""
 	auth_scopes := "tweet.read%20tweet.write%20users.read%20users.read%20follows.read%20follows.write%20offline.access"
 	client_id := os.Getenv("CLIENT_ID")
@@ -90,7 +49,7 @@ func construct_auth_url(redirect_url string) {
 	state := generateRandomString(12)
 	auth_url += "&state=" + state + "&code_challenge=" + code_challenge + "&code_challenge_method=plain"
 
-	fmt.Println(auth_url)
+	return auth_url
 }
 
 

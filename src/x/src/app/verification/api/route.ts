@@ -6,8 +6,13 @@ export async function GET(request: Request) {
     const code = searchParams.get('code')
     console.log('state', state)
     console.log('code', code)
-    // return response with state and code
+
+    if (!state || !code) {
+        return new Response("Missing state or code", { status: 400 })
+    }
+    // 
     return new Response(JSON.stringify({ state, code }), {
         headers: { 'content-type': 'application/json' },
     })
 }
+
