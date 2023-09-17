@@ -10,7 +10,7 @@ func main() {
         fmt.Fprintf(w, "Hello, x server 👋!")
     })
 
-    http.ListenAndServe(":3000", nil)
+    http.ListenAndServe(":8080", nil)
 }
 
 /*

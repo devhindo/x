@@ -13,7 +13,7 @@ RUN go mod download
 
 # expose port 3000
 
-EXPOSE 3000/tcp
+EXPOSE 8080
 
 CMD ["go", "run", "main.go"]
 
