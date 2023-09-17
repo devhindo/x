@@ -4,7 +4,7 @@ RUN mkdir /server
 
 COPY . /server
 
-#WORKDIR /server
+WORKDIR /server
 
 RUN go build -o main .
 
