@@ -4,6 +4,7 @@ import (
 	"os"
 	"fmt"
 	"github.com/devhindo/x/src/cli/help"
+	"github.com/devhindo/x/src/cli/auth"
 )
 
 func HandleArgs() {
@@ -15,6 +16,9 @@ func HandleArgs() {
 			//Auth()
 		case "tweet":
 			//Tweet()
+		default:
+			fmt.Println("Unknown command | try 'x help'")
+			os.Exit(0)
 	}
 }
 
