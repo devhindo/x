@@ -2,18 +2,6 @@ package auth
 
 import ()
 
-func Validate() {
-
-}
-
-func checkIfAuthenticated() {
-	i
-}
-
-func isAuthenticated() {
-
-}
-
-func checkLocalAuthString() {
-	
+func IsAuthenticated() bool {
+	return false
 }

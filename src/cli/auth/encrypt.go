@@ -4,7 +4,7 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"
-	"encoding/base64"
+	//"encoding/base64"
 	"fmt"
 	"os"
 )
@@ -58,7 +58,8 @@ func secret_key() []byte {
 	}
 
 	// Encode the secret key to a base64 string.
-	encodedSecretKey := base64.StdEncoding.EncodeToString(secretKey)
+	//encodedSecretKey := base64.StdEncoding.EncodeToString(secretKey)
 
-	return encodedSecretKey
+	//return encodedSecretKey
+	return secretKey
 }

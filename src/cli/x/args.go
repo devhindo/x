@@ -13,7 +13,7 @@ func HandleArgs() {
 		case "help":
 			help.Help()
 		case "auth":
-			//Auth()
+			auth.Auth()
 		case "tweet":
 			//Tweet()
 		default:
