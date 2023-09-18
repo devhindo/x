@@ -1,3 +1,7 @@
-<h1 align="center">X (CLI)</h1>
+<p align="center">
+  <img src="./assets/x.png" alt="Logo" height=170>
+</p>
+
+<p align="center">
 
 <i>interact with x api and perform tasks like posting tweets or whatever</i>
