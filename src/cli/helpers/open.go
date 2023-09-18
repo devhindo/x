@@ -5,7 +5,14 @@ import (
 	"runtime"
 )
 
-func Open(url string) error {
+func OpenBrowser(url string) {
+    err := open(url)
+    if err != nil {
+        panic(err)
+    }
+}
+
+func open(url string) error {
 
 	// source : https://gist.github.com/sevkin/9798d67b2cb9d07cb05f89f14ba682f8
 

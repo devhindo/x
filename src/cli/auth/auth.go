@@ -8,9 +8,8 @@ import (
 func Auth() {
 	if(!IsAuthenticated()) {
 		url := Auth_url()
-		helpers.Open(url)
-
-
+		helpers.OpenBrowser(url)
+		// todo : wait for access token
 		fmt.Println("Authenticated")
 	} else {
 		fmt.Println("Already authenticated")
