@@ -4,7 +4,10 @@ import (
 	"crypto/rand"
 	"encoding/base64"
 	"os"
+	"github.com/devhindo/x/src/cli/env"
 )
+
+
 
 func Auth_url() string {
 	return construct_auth_url("https://x-blush.vercel.app/api")
@@ -12,6 +15,7 @@ func Auth_url() string {
 }
 
 func construct_auth_url(redirect_url string) string {
+	env.Load()
 	auth_url := ""
 	auth_scopes := "tweet.read%20tweet.write%20users.read%20users.read%20follows.read%20follows.write%20offline.access"
 	client_id := os.Getenv("CLIENT_ID")

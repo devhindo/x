@@ -1,0 +1,5 @@
+package tweet
+
+func Post() {
+	
+}
