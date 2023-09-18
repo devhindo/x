@@ -23,13 +23,13 @@ func construct_auth_url(redirect_url string) string {
 	auth_url += client_id
 	auth_url += "&redirect_uri=" + redirect_url
 	auth_url += "&scope=" + auth_scopes
-	code_challenge := generateRandomString(12)
-	state := generateRandomString(12)
+	code_challenge := GenerateRandomString(12)
+	state := GenerateRandomString(12)
 	auth_url += "&state=" + state + "&code_challenge=" + code_challenge + "&code_challenge_method=plain"
 	return auth_url
 }
 
-func generateRandomString(length int) string {
+func GenerateRandomString(length int) string {
 	b := make([]byte, length)
 	_, err := rand.Read(b)
 	if err != nil {

@@ -13,3 +13,7 @@ func checkIfAuthenticated() {
 func isAuthenticated() {
 
 }
+
+func checkLocalAuthString() {
+	
+}
