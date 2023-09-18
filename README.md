@@ -4,4 +4,4 @@
 
 <p align="center">
 
-<i>interact with x api and perform tasks like posting tweets or whatever</i>
+<center><i>interact with x api and perform tasks like posting tweets or whatever</i></center>
