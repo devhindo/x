@@ -1,5 +1,7 @@
 package auth
 
+import ()
+
 func Validate() {
 
 }
@@ -9,5 +11,5 @@ func checkIfAuthenticated() {
 }
 
 func isAuthenticated() {
-	
+
 }
