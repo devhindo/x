@@ -1,3 +1,3 @@
 export async function GET(request: Request) {
-    return new Response("auth")
+    return new Response("")
 }

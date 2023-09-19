@@ -1,10 +1,10 @@
 export async function GET(request: Request) {
-    // wait 10 seconds
-    // console log comming requests
-    //console.log(request);
-    console.log("___________________________________");
-    console.log(request.body);
-    console.log("___________________________________");
-    console.log(request.headers);
-    return new Response("learn page");
+    return new Response("learn page | GET");
+}
+
+// handle POST requests
+export async function POST(request: Request) {
+    const { username, secret } = await request.json();
+    console.log(username, secret);
+    return new Response("learn page | POST");
 }
