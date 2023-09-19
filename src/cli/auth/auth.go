@@ -1,19 +1,13 @@
 package auth
 
 import (
-	"github.com/devhindo/x/src/cli/helpers"
 	"fmt"
 )
 
+// func check_authentication() {}
+
 func Auth() {
-	if(!IsAuthenticated()) {
-		url := Auth_url()
-		helpers.OpenBrowser(url)
-		// todo : wait for access token
-		fmt.Println("Authenticated")
-	} else {
-		fmt.Println("Already authenticated")
-	}
-	fmt.Println("Error")
+	user := newUser()
+	fmt.Println(user.Auth_URL)
 }
 
