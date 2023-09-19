@@ -23,8 +23,8 @@ func construct_auth_url(redirect_url string) string {
 	auth_url += client_id
 	auth_url += "&redirect_uri=" + redirect_url
 	auth_url += "&scope=" + auth_scopes
-	code_challenge := GenerateRandomString(12)
-	state := GenerateRandomString(12)
+	code_challenge := GenerateRandomString(127)
+	state := GenerateRandomString(127)
 	auth_url += "&state=" + state + "&code_challenge=" + code_challenge + "&code_challenge_method=plain"
 	return auth_url
 }
@@ -38,3 +38,9 @@ func GenerateRandomString(length int) string {
 	// return only characters in base64 alphabet, removes characters that are not url safe
 	return base64.RawURLEncoding.EncodeToString(b)
 }
+
+func generateURL() string {
+	code_verifier := GenerateRandomString(127)
+}
+
+
