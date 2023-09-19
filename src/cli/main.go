@@ -1,21 +1,21 @@
 package main
 
 import (
-	//"fmt"
+	"fmt"
 	//"github.com/devhindo/x/src/cli/x"
-	"github.com/devhindo/x/src/cli/api"
-	//"github.com/devhindo/x/src/cli/auth"
+	//"github.com/devhindo/x/src/cli/api"
+	"github.com/devhindo/x/src/cli/auth"
 )
 
 func main() {
 	//x.Run()
-	//fmt.Println(auth.Auth_url())
-	api.GET("http://localhost:3000/api/auth")
-	user := api.User{
-		Username: "test",
-		Secret: "test",
-	}
-	api.POST("http://localhost:3000/api/auth", user)
+	fmt.Println(auth.Auth_url())
+	//api.GET("http://localhost:3000/api/auth")
+	//user := api.User{
+	//	Username: "test",
+	//	Secret: "test",
+	//}
+	//api.POST("http://localhost:3000/api/auth", user)
 
 }
 

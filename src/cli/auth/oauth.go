@@ -1,4 +1,4 @@
-package main
+package auth
 
 import (
 	"crypto/rand"
@@ -12,9 +12,9 @@ import (
 *	code_challenge = BASE64URL-ENCODE(SHA256(ASCII(code_verifier)))
 */
 
-func Generate_code_challenge(s string) string {
+func Generate_code_challenge() string {
 	// Base64-URL-encoded string of the SHA256 hash of the code verifier
-	return base64.RawURLEncoding.EncodeToString([]byte(s))
+	return base64.RawURLEncoding.EncodeToString([]byte(hash_sha256(generate_code_verifier())))
 }
 
 func hash_sha256(s string) string {
@@ -46,4 +46,16 @@ func generate_code_verifier() string {
 	}
 
 	return string(b)
+}
+
+func Generate_state(stateLength int) string {
+	b := make([]byte, stateLength)
+	_, err := rand.Read(b)
+	if err != nil {
+		panic(err)
+	}
+
+	state := base64.URLEncoding.EncodeToString(b)
+
+	return state
 }
