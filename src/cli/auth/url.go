@@ -10,8 +10,8 @@ import (
 
 
 func Auth_url() string {
-	return construct_auth_url("https://x-blush.vercel.app/api")
-
+	//return construct_auth_url("https://x-blush.vercel.app/api")
+	return construct_auth_url("http://localhost:3000/api/auth")
 }
 
 func construct_auth_url(redirect_url string) string {
