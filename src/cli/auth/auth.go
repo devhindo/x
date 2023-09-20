@@ -1,13 +1,9 @@
 package auth
 
-import (
-	"fmt"
-)
-
 // func check_authentication() {}
 
 func Auth() {
 	user := newUser()
-	fmt.Println(user)
+	user.add_user_to_db()
 }
 

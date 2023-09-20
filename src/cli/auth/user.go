@@ -1,9 +1,5 @@
 package auth
 
-import (
-
-)
-
 type User struct {
 	State string `json:"state"`
 	Auth_URL string `json:"auth_url"`
@@ -19,4 +15,8 @@ func newUser() *User {
 	user.generate_auth_url()
 	
 	return user
+}
+
+func (u *User) add_user_to_db() {
+	POST("http://localhost:3000/api/auth/add", *u)
 }

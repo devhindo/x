@@ -1,4 +1,4 @@
-package api
+package auth
 
 import (
 	"bytes"
@@ -9,11 +9,6 @@ import (
     "encoding/json"
 
 )
-
-type User struct {
-	Username string `json:"username"`
-	Secret   string `json:"secret"`
-}
 
 func POST(url string, user User) {
 	// Create a new HTTP request object.
