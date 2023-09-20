@@ -12,9 +12,9 @@ import (
 *	code_challenge = BASE64URL-ENCODE(SHA256(ASCII(code_verifier)))
 */
 
-func Generate_code_challenge() string {
+func (u *User) generate_code_challenge() {
 	// Base64-URL-encoded string of the SHA256 hash of the code verifier
-	return base64.RawURLEncoding.EncodeToString([]byte(hash_sha256(generate_code_verifier())))
+	u.Code_challenge = base64.RawURLEncoding.EncodeToString([]byte(hash_sha256(u.Code_verifier)))
 }
 
 func hash_sha256(s string) string {
@@ -23,7 +23,7 @@ func hash_sha256(s string) string {
 	return fmt.Sprintf("%x", h.Sum(nil))
 }
 
-func generate_code_verifier() string {
+func (u *User) generate_code_verifier() {
 	const (
 		chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~"
 		min   = 43
@@ -44,11 +44,11 @@ func generate_code_verifier() string {
 		}
 		b[i] = chars[n.Int64()]
 	}
-
-	return string(b)
+	
+	u.Code_verifier = string(b)
 }
 
-func Generate_state(stateLength int) string {
+func (u *User) generate_state(stateLength int) {
 	b := make([]byte, stateLength)
 	_, err := rand.Read(b)
 	if err != nil {
@@ -57,5 +57,5 @@ func Generate_state(stateLength int) string {
 
 	state := base64.URLEncoding.EncodeToString(b)
 
-	return state
+	u.State = state
 }

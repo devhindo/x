@@ -8,6 +8,6 @@ import (
 
 func Auth() {
 	user := newUser()
-	fmt.Println(user.Auth_URL)
+	fmt.Println(user)
 }
 

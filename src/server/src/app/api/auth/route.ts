@@ -13,12 +13,16 @@ export async function GET(request: Request) {
 
     // todo: request access token from twitter api
 
+
+
     // todo: save all this in supabase
 
     // todo: response with access token to the cli upon post request
 
     return NextResponse.json({ state, code })
 }
+
+
 
 //type User = {
 //    username?: string
@@ -61,5 +65,42 @@ const insertUser = async (user: any) => {
     console.log(data)
 }
 
-console.log("ahmeddddddddd")
 // insertUser(user)
+
+
+
+const getAccessToken = async (state: string, code: string) => {
+
+}
+
+
+
+/*
+curl --location --request POST 'https://api.twitter.com/2/oauth2/token' \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'code=VGNibzFWSWREZm01bjN1N3dicWlNUG1oa2xRRVNNdmVHelJGY2hPWGxNd2dxOjE2MjIxNjA4MjU4MjU6MToxOmFjOjE' \
+--data-urlencode 'grant_type=authorization_code' \
+--data-urlencode 'client_id=rG9n6402A3dbUJKzXTNX4oWHJ' \
+--data-urlencode 'redirect_uri=https://www.example.com' \
+--data-urlencode 'code_verifier=challenge'
+*/
+
+function post_request_to_twitter_api(code: string) {
+    const data = {
+        code: code,
+        grant_type: 'authorization_code',
+        client_id: process.env.TWITTER_CLIENT_ID,
+        redirect_uri: process.env.TWITTER_REDIRECT_URI,
+        code_verifier: process.env.TWITTER_CODE_VERIFIER
+    }
+
+    const options = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: JSON.stringify(data)
+    }
+
+    fetch('https://api.twitter.com/2/oauth2/token', options)
+        .then(response => response.json())
+        .then(data => console.log(data))
+}
