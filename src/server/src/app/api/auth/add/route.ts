@@ -24,31 +24,14 @@ export async function POST(request: Request) {
 }
 
 async function add_user_to_supabase(user: User) {
-    // check if user exists by state
-    //console.log("user22222222:" + user.code_challenge)
-
-    const { data, error } = await supabase
-    .from('users')
-    .select()
-    .eq('state', user.state)
-    .maybeSingle()
-
-    if (error) {
-        return NextResponse.json({ error })
-    }
-    //console.log("data1:" + data)
-    if (data) {
         const { error } = await supabase
         .from('users')
-        .update({ code_verifier: user.code_verifier, code_challenge: user.code_challenge, license: user.license })
-        .eq('state', user.state)
-    } else {
-        const { error } = await supabase
-        .from('users')
-        .insert({ state: user.state, code_verifier: user.code_verifier, code_challenge: user.code_challenge })
-    }
+        .insert({ code_verifier: user.code_verifier, code_challenge: user.code_challenge, license: user.license, state: user.state })
 
-    return NextResponse.json({ error })
+        if (error) {
+            return NextResponse.json({ error, message: 'Error adding user to supabase' })
+        }
+        return NextResponse.json({ message: 'User added to supabase'})
 }
 
 export async function GET(request: Request) {
