@@ -40,10 +40,12 @@ func POST(url string, u User) {
 	defer resp.Body.Close()
 
 	// Handle the response
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		log.Fatal(err)
-	}
+	//body, err := io.ReadAll(resp.Body)
+	//if err != nil {
+	//	log.Fatal(err)
+	//}
+
+
 	
 	status := resp.StatusCode
 	

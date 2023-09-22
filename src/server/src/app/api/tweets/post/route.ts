@@ -7,39 +7,39 @@ import { access } from "fs";
 const supabase = createClient(process.env.SUPABASE_URL as string, process.env.SUPABASE_SECRET as string)
 
 type Tweet = {
-    state?: string,
+    license?: string,
     tweet?: string
 }
 
 export async function POST(request: Request) {
 
     const data = await request.json()
-    const tweet: Tweet = data
+    const { tweet, license}: Tweet = data
 
+    const access_token = await get_access_token(license as string)
 
-    const access_token = await get_access_token(tweet.state as string)
 
     const client = new Client(access_token);
 
     const post = await client.tweets.createTweet(
         {
-            text: tweet.tweet as string,
+            text: tweet as string,
         }
     )
 
-    return new NextResponse("tweet posted!")
-}
+    return NextResponse.json({ message: 'tweet posted!' }, { status: 200 })}
 
 
 
-async function get_access_token(state: string) {
+async function get_access_token(license: string) {
+    console.log("licessssssssssssssssssssssssssssssss" + license)
     const { data, error } = await supabase
         .from('users')
         .select()
-        .eq('state', state)
+        .eq('license', license)
         .single()
     if (error) {
-        console.log(error)
+        return NextResponse.json({ error, message: 'err' }, { status: 401 })
     }
     const { access_token } = data
 

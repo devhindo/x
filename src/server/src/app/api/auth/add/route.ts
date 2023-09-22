@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
-import { json } from 'node:stream/consumers'
 
 const supabase = createClient(process.env.SUPABASE_URL as string , process.env.SUPABASE_SECRET as string)
 

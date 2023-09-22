@@ -3,6 +3,13 @@ package auth
 import (
 	//"os"
 	"github.com/devhindo/x/src/cli/lock"
+	"bytes"
+	"fmt"
+	"io"
+	"net/http"
+    "encoding/json"
+	"log"
+	"os"
 )
 
 // func check_authentication() {}
@@ -14,15 +21,63 @@ func Auth() {
 	u.open_browser_to_auth_url()
 }
 
-func isAuthenticated() bool {
+type data struct{
+	Key string `json:"key"`
+}
+
+func Verify() bool {
 	key, err := lock.ReadLicenseKeyFromFile()
 	if err != nil {
-		return false
+		fmt.Println("you are not authenticated | try 'x auth'")
+		os.Exit(1)
 	}
-	if key == "" {
-		return false
+
+	k := data{Key: key}
+
+	url := "http://localhost:3000/api/auth/verify"
+
+	req, err := http.NewRequest("POST", url, nil)
+	if err != nil {
+		panic(err)
 	}
-	return true
+
+
+	jsonBytes, err := json.Marshal(k)
+	if err != nil {
+		panic(err)
+	}
+
+	req.Body = io.NopCloser(bytes.NewBuffer(jsonBytes))
+
+
+
+	req.Header.Set("Content-Type", "application/json")
+
+	// Send the request
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer resp.Body.Close()
+
+	// Handle the response
+	//body, err := io.ReadAll(resp.Body)
+	//if err != nil {
+	//	log.Fatal(err)
+	//}
+
+
+	
+	status := resp.StatusCode
+
+	if status != 200 {
+		fmt.Println("you are not authenticated | try 'x auth'")
+		return false
+	} else {
+		fmt.Println("you're verified!")
+		return true
+	}
 }
 
 /*

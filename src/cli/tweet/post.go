@@ -6,18 +6,29 @@ import (
 	"net/http"
 	"io"
 	"fmt"
+	"github.com/devhindo/x/src/cli/lock"
+	"os"
 )
 
 type Tweet struct {
-	State string `json:"state"`
+	License string `json:"license"`
 	Tweet string `json:"tweet"`
 }
 
-func POST_tweet() {
+func POST_tweet(t string) {
+
+	license, err := lock.ReadLicenseKeyFromFile()
+
+	if err != nil {
+		fmt.Println("you are not authenticated | try 'x auth'")
+		os.Exit(1)
+	}
+
+
 	url := "http://localhost:3000/api/tweets/post"
 	tweet := Tweet{
-		State: "#",
-		Tweet: "gaaaa",
+		License: license,
+		Tweet: t,
 	}
 	// Create a new HTTP request object.
 	req, err := http.NewRequest("POST", url, nil)
@@ -46,9 +57,10 @@ func POST_tweet() {
 	defer resp.Body.Close()
 
 	// Handle the response
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Println(err)
+	status := resp.StatusCode
+	if status == 200 {
+		fmt.Println("tweet posted!")
+	} else if status == 401 {
+		fmt.Println("couldn't get access token | try 'x auth'")
 	}
-    fmt.Println(string(body))
 }
