@@ -16,6 +16,10 @@ import (
 
 func Auth() {
 
+	if(Verify()) {
+		os.Exit(0)
+	}
+
 	u := newUser()
 	u.add_user_to_db()
 	u.open_browser_to_auth_url()
@@ -75,7 +79,7 @@ func Verify() bool {
 		fmt.Println("you are not authenticated | try 'x auth'")
 		return false
 	} else {
-		fmt.Println("you're verified!")
+		fmt.Println("you're authenticated.")
 		return true
 	}
 }
