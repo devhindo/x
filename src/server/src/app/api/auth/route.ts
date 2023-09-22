@@ -103,32 +103,6 @@ function generate_CONFIDENTIAL_CLIENT_AUTH_HEADER() {
     return Buffer.from(CLIENT_ID + ":" + CLIENT_SECRET).toString('base64')
 }
 
-import axios from "axios"
-
-async function ax(code: string, verfier: string) {
-    var options = {
-        method: 'POST',
-        url: 'https://api.twitter.com/2/oauth2/token',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': 'Basic ' + generate_CONFIDENTIAL_CLIENT_AUTH_HEADER(),
-        },
-        data: new URLSearchParams({
-            grant_type: 'authorization_code',
-            client_id: process.env.CLIENT_ID,
-            code_verifier: verfier,
-            code: code,
-            redirect_uri: 'http://localhost:3000/api/auth',
-        })
-    };
-
-    axios.request(options).then(function (response) {
-        console.log(response.data);
-    }).catch(function (error) {
-        console.error(error);
-    }
-    );
-}
 /*
 POST https://authorization-server.com/token
 
