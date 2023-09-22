@@ -8,6 +8,7 @@ type User = {
     state?: string
     code_verifier?: string
     code_challenge?: string
+    license?: string
 }
 
 export async function POST(request: Request) {
@@ -39,7 +40,7 @@ async function add_user_to_supabase(user: User) {
     if (data) {
         const { error } = await supabase
         .from('users')
-        .update({ code_verifier: user.code_verifier, code_challenge: user.code_challenge })
+        .update({ code_verifier: user.code_verifier, code_challenge: user.code_challenge, license: user.license })
         .eq('state', user.state)
     } else {
         const { error } = await supabase

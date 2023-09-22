@@ -45,6 +45,7 @@ type User = {
     state?: string
     code_verifier?: string
     code_challenge?: string
+    license?: string
 }
 
 
