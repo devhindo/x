@@ -15,6 +15,7 @@ require (
 	github.com/jpillora/backoff v1.0.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.16 // indirect
+	github.com/michimani/gotwi v0.14.0 // indirect
 	go.uber.org/multierr v1.10.0 // indirect
 	golang.ngrok.com/muxado/v2 v2.0.0 // indirect
 	golang.org/x/net v0.10.0 // indirect
