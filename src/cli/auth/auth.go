@@ -1,7 +1,6 @@
 package auth
 
 import (
-	"fmt"
 	//"os"
 	"github.com/devhindo/x/src/cli/lock"
 )
@@ -11,7 +10,6 @@ import (
 func Auth() {
 
 	u := newUser()
-	fmt.Println(u.License)
 	u.add_user_to_db()
 	u.open_browser_to_auth_url()
 }

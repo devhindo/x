@@ -8,9 +8,11 @@ import (
     "log"
     "encoding/json"
 
+	"github.com/devhindo/x/src/cli/lock"
+
 )
 
-func POST(url string, user User) {
+func POST(url string, u User) {
 	// Create a new HTTP request object.
 	req, err := http.NewRequest("POST", url, nil)
 	if err != nil {
@@ -18,7 +20,7 @@ func POST(url string, user User) {
 		return
 	}
 
-	jsonBytes, err := json.Marshal(user)
+	jsonBytes, err := json.Marshal(u)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -42,7 +44,20 @@ func POST(url string, user User) {
 	if err != nil {
 		log.Fatal(err)
 	}
-    fmt.Println(string(body))
+	
+	status := resp.StatusCode
+	
+	if status != 200 {
+		fmt.Println("error adding user")
+	} else {
+		err := lock.WriteLicenseKeyToFile(u.License)
+		if err != nil {
+			fmt.Println("coudln't write license key to file")
+			return
+		}
+	}
+
+    //fmt.Println(string(body))
 }
 
 func GET(url string) {

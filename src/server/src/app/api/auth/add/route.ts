@@ -29,9 +29,9 @@ async function add_user_to_supabase(user: User) {
         .insert({ code_verifier: user.code_verifier, code_challenge: user.code_challenge, license: user.license, state: user.state })
 
         if (error) {
-            return NextResponse.json({ error, message: 'Error adding user to supabase' })
+            return NextResponse.json({ error, message: 'err' }, { status: 500 })
         }
-        return NextResponse.json({ message: 'User added to supabase'})
+        return NextResponse.json({ message: 'added'}, { status: 200 })
 }
 
 export async function GET(request: Request) {
