@@ -21,11 +21,11 @@ export async function GET(request: Request) {
 
     const user = await get_user_data(state)
 
-    const { code_verifier, code_challenge } = user
+    const { code_verifier, code_challenge, state_db } = user
 
     // request access token from twitter api
     //const access_token = await ax(code,code_verifier)
-    const access_token = await req_access_token(code, code_verifier)
+    const access_token = await req_access_token(code, code_verifier, state, state_db)
     //console.log(code_verifier)
 
     // todo: save all this in supabase
@@ -142,7 +142,11 @@ grant_type=authorization_code
 
 // todo send the code verfier properly
 
-async function req_access_token(code: string, verfier: string) {
+async function req_access_token(code: string, verfier: string, state: string, state_db: string) {
+    if (state != state_db) {
+        console.log("state does not match")
+        return null
+    }
     console.log("xxxxxxxxxxxxxxx" + verfier)
     let url = 'https://api.twitter.com/2/oauth2/token'
     url += '?grant_type=authorization_code'
@@ -152,7 +156,9 @@ async function req_access_token(code: string, verfier: string) {
     url += '&code=' + code
     url += '&code_verifier=' + verfier
 
-
+    const {searchParams} = new URL(url)
+    const ver = searchParams.get("code_verifier")
+    console.log("2222222222222222" + ver)
     const response = await fetch(url, {
         method: 'POST',
         headers: {

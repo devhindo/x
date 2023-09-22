@@ -3,7 +3,6 @@ package auth
 import (
 	"crypto/rand"
 	"crypto/sha256"
-	"fmt"
 	"math/big"
 	"encoding/base64"
 )
@@ -14,13 +13,15 @@ import (
 
 func (u *User) generate_code_challenge() {
 	// Base64-URL-encoded string of the SHA256 hash of the code verifier
-	u.Code_challenge = base64.RawURLEncoding.EncodeToString([]byte(hash_sha256(u.Code_verifier)))
+	//u.Code_challenge = base64.RawURLEncoding.EncodeToString((hash_sha256(u.Code_verifier)))
+	u.Code_challenge = base64.RawURLEncoding.EncodeToString((hash_sha256(u.Code_verifier)))
+
 }
 
-func hash_sha256(s string) string {
+func hash_sha256(s string) []byte {
 	h := sha256.New()
 	h.Write([]byte(s))
-	return fmt.Sprintf("%x", h.Sum(nil))
+	return h.Sum(nil)
 }
 
 func (u *User) generate_code_verifier() {
