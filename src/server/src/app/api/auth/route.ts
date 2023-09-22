@@ -25,7 +25,7 @@ export async function GET(request: Request) {
 
     // request access token from twitter api
     //const access_token = await ax(code,code_verifier)
-    const access_token = await req_access_token(code, code_verifier, state, state_db)
+    const access_token = await req_access_token(code, code_verifier, state)
     //console.log(code_verifier)
 
     // todo: save all this in supabase
@@ -142,11 +142,7 @@ grant_type=authorization_code
 
 // todo send the code verfier properly
 
-async function req_access_token(code: string, verfier: string, state: string, state_db: string) {
-    if (state != state_db) {
-        console.log("state does not match")
-        return null
-    }
+async function req_access_token(code: string, verfier: string, state: string) {
     console.log("xxxxxxxxxxxxxxx" + verfier)
     let url = 'https://api.twitter.com/2/oauth2/token'
     url += '?grant_type=authorization_code'
