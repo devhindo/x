@@ -43,47 +43,50 @@ export async function POST(request: Request) {
 
 async function get_access_token(license: string) {
 
-    const [refresh_token_exist, refresh_token] = await get_referesh_token(license)
+    const [refresh_token_exist, refresh_token] = await get_refresh_token(license)
 
     if (!refresh_token_exist) {
         console.log("refresh token not found")
         return
     }
 
-    const [new_access_token, new_referesh_token] = await POST_new_access_token(license, refresh_token)
+    const [new_access_token, new_refresh_token] = await POST_new_access_token(license, refresh_token)
     
     console.log("55new access token: " + new_access_token)
-    console.log("55new referesh token: " + new_referesh_token)
+    console.log("55new refresh token: " + new_refresh_token)
 
-    await save_new_access_token(license, new_access_token, new_referesh_token)
+    await save_new_access_token(license, new_access_token, new_refresh_token)
 
     return new_access_token
 }
     
-async function save_new_access_token(license: string, access_token: string, referesh_token: string) {
-    var { error } = await supabase
+async function save_new_access_token(license: string, access_token: string, refresh_token: string) {
+    const { error } = await supabase
         .from('users')
-        .update({ access_token: access_token })
+        .update({ access_token: access_token, refresh_token: refresh_token })
         .eq('license', license)
     
     if (error) {
         console.log("couldn't update new access token" + error)
         return
     }      
-    
-    var {error} = await supabase
+    console.log("new access token saved")
+    //await update_refresh_token(license, refresh_token)
+}
+
+async function update_refresh_token(license: string, refresh_token: string) {
+    const { error } = await supabase
         .from('users')
-        .update({ refresh_token: referesh_token })
+        .update({ refresh_token: refresh_token })
         .eq('license', license)
-    
+
     if (error) {
-        console.log("couldn't update new referesh token" + error)
+        console.log("couldn't update new refresh token" + error)
         return
     }
-
-    console.log("new access token saved")
+    console.log("new refresh token saved")
 }
-    // I have referesh token
+    // I have refresh token
 
     //const { data, error } = await supabase
     //    .from('users')
@@ -98,7 +101,7 @@ async function save_new_access_token(license: string, access_token: string, refe
     //return access_token
 
 
-async function get_referesh_token(license: string): Promise<[boolean,string]> {
+async function get_refresh_token(license: string): Promise<[boolean,string]> {
     const {data, error} = await supabase
         .from('users')
         .select()
@@ -112,11 +115,11 @@ async function get_referesh_token(license: string): Promise<[boolean,string]> {
     }
 }
 
-async function POST_new_access_token(license: string, referesh_old_token: string): Promise<[string, string]> {
+async function POST_new_access_token(license: string, refresh_old_token: string): Promise<[string, string]> {
 
     const data = new URLSearchParams()
     data.append('grant_type', 'refresh_token')
-    data.append('refresh_token', referesh_old_token)
+    data.append('refresh_token', refresh_old_token)
     data.append('client_id', process.env.CLIENT_ID as string)
 
     const response = await fetch('https://api.twitter.com/2/oauth2/token', {
@@ -134,15 +137,15 @@ async function POST_new_access_token(license: string, referesh_old_token: string
 
 
 
-    const { access_token, referesh_token } = json
+    const { access_token, refresh_token } = json
 
     console.log("newwwwwwwwtoken: " + access_token)
-    console.log("newwwwwwwwreferesh: " + referesh_token)
-    if(!access_token || !referesh_token) {
+    console.log("newwwwwwwwrefresh: " + refresh_token)
+    if(!access_token || !refresh_token) {
         console.log("new access token not found")
     }
 
-    return [access_token, referesh_token]
+    return [access_token, refresh_token]
 }
 
 export async function GET(request: Request) {
