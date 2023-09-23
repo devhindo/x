@@ -2,7 +2,6 @@ import { Client } from "twitter-api-sdk";
 import { AuthClient } from "twitter-api-sdk/dist/types";
 import { NextResponse } from "next/server";
 import { createClient } from '@supabase/supabase-js'
-import { verify_license } from "../../auth/verify/route";
 import { generate_CONFIDENTIAL_CLIENT_AUTH_HEADER } from "../../auth/route";
 
 const supabase = createClient(process.env.SUPABASE_URL as string, process.env.SUPABASE_SECRET as string)
@@ -10,6 +9,18 @@ const supabase = createClient(process.env.SUPABASE_URL as string, process.env.SU
 type Tweet = {
     license?: string,
     tweet?: string
+}
+
+async function verify_license(license: string) {
+    const { data, error } = await supabase
+    .from('users')
+    .select()
+    .eq('license', license)
+
+    if (error || !data) {
+        return false
+    }
+    return true
 }
 
 export async function POST(request: Request) {

@@ -18,7 +18,7 @@ export async function POST(request: Request) {
 
 }
 
-export async function verify_license(license: string) {
+async function verify_license(license: string) {
     const { data, error } = await supabase
     .from('users')
     .select()
