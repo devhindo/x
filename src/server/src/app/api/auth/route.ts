@@ -90,7 +90,7 @@ async function get_user_data(state: string) {
 
 
 
-function generate_CONFIDENTIAL_CLIENT_AUTH_HEADER() {
+export function generate_CONFIDENTIAL_CLIENT_AUTH_HEADER() {
     const CLIENT_ID = process.env.CLIENT_ID
     const CLIENT_SECRET = process.env.CLIENT_SECRET
     return Buffer.from(CLIENT_ID + ":" + CLIENT_SECRET).toString('base64')

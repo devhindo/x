@@ -15,11 +15,6 @@ import (
 // func check_authentication() {}
 
 func Auth() {
-
-	if(Verify()) {
-		os.Exit(0)
-	}
-
 	u := newUser()
 	u.add_user_to_db()
 	u.open_browser_to_auth_url()

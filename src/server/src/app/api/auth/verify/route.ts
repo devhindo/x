@@ -7,23 +7,27 @@ export async function POST(request: Request) {
     const data = await request.json()
     const license = data.license
     console.log(license)
-    return await verify_license(license)
+
+    const license_exist = await verify_license(license)
+
+    if (!license_exist) {
+        return NextResponse.json({ message: 'license not found'}, { status: 500 })
+    }
+
+    return NextResponse.json({ message: 'verified'}, { status: 200 })
+
 }
 
-async function verify_license(license: string) {
+export async function verify_license(license: string) {
     const { data, error } = await supabase
     .from('users')
     .select()
     .eq('license', license)
 
     if (error || !data) {
-        console.log("no userrrrrrrrrr")
-        return NextResponse.json({ error, message: 'err' }, { status: 500 })
+        return false
     }
-
-    // check if data is empty
-    console.log("successsssssssssssss")
-    return NextResponse.json({ message: 'verified'}, { status: 200 })
+    return true
 }
 
 export async function GET(request: Request) {
