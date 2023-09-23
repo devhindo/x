@@ -24,3 +24,5 @@ go.work
 .env
 doc
 play
+dist/
+.goreleaser.yaml
