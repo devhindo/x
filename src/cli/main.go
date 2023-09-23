@@ -1,12 +1,12 @@
 package main
 
 import (
-	//"fmt"
 	"github.com/devhindo/x/src/cli/x"
 	//"github.com/devhindo/x/src/cli/api"
 	//"github.com/devhindo/x/src/cli/auth"
 	//"github.com/devhindo/x/src/cli/tweet"
 	//"github.com/devhindo/x/src/cli/gotwi"
+	//"github.com/devhindo/x/src/cli/clear"
 )
 
 func main() {
@@ -19,7 +19,7 @@ func main() {
 	//	Secret: "test",
 	//}
 	//api.POST("http://localhost:3000/api/auth", user)
-
+	//clear.StartOver()
 }
 
 

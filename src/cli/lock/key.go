@@ -59,3 +59,18 @@ func ReadLicenseKeyFromFile() (string, error) {
 	licenseKey := string(licenseFileBytes)
 	return licenseKey, nil
 }
+
+func ClearLicenseFile() error {
+    homeDir, err := os.UserHomeDir()
+    if err != nil {
+            return fmt.Errorf("Error getting user home directory: %v", err)
+    }
+
+    licenseFilePath := filepath.Join(homeDir, ".tempxcli")
+    err = os.Remove(licenseFilePath)
+    if err != nil {
+            return fmt.Errorf("Error deleting license file: %v", err)
+    }
+
+    return nil
+}

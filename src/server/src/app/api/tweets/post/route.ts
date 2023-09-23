@@ -2,7 +2,6 @@ import { Client } from "twitter-api-sdk";
 import { AuthClient } from "twitter-api-sdk/dist/types";
 import { NextResponse } from "next/server";
 import { createClient } from '@supabase/supabase-js'
-import { access } from "fs";
 import { verify_license } from "../../auth/verify/route";
 import { generate_CONFIDENTIAL_CLIENT_AUTH_HEADER } from "../../auth/route";
 

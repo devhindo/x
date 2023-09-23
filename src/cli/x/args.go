@@ -6,6 +6,8 @@ import (
 	"github.com/devhindo/x/src/cli/help"
 	"github.com/devhindo/x/src/cli/auth"
 	"github.com/devhindo/x/src/cli/tweet"
+	"github.com/devhindo/x/src/cli/clear"
+
 )
 
 func HandleArgs() {
@@ -18,6 +20,8 @@ func HandleArgs() {
 				auth.Auth()
 			} else if len(os.Args) == 3 && (os.Args[2] == "--verify" || os.Args[2] == "-v") {
 				auth.Verify()
+			} else if len(os.Args == 3) && (os.Args[2] == "--clear" || os.Args[2] == "-c") {
+				clear.StartOver()
 			} else {
 				fmt.Println("Unknown command | try 'x help'")
 				os.Exit(0)
