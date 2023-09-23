@@ -8,6 +8,7 @@ type User = {
     code_verifier?: string
     code_challenge?: string
     license?: string
+    auth_url?: string
 }
 
 export async function POST(request: Request) {
@@ -25,7 +26,7 @@ export async function POST(request: Request) {
 async function add_user_to_supabase(user: User) {
         const { error } = await supabase
         .from('users')
-        .insert({ code_verifier: user.code_verifier, code_challenge: user.code_challenge, license: user.license, state: user.state })
+        .insert({ code_verifier: user.code_verifier, code_challenge: user.code_challenge, license: user.license, state: user.state, auth_url: user.auth_url })
 
         if (error) {
             return NextResponse.json({ error, message: 'err' }, { status: 500 })

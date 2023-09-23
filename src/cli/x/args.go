@@ -13,15 +13,19 @@ import (
 func HandleArgs() {
 	checkArgs()
 	switch os.Args[1] {
-		case "help":
+		case "--help":
+			help.Help()
+		case "-h":
 			help.Help()
 		case "auth":
 			if len(os.Args) == 2 {
 				auth.Auth()
 			} else if len(os.Args) == 3 && (os.Args[2] == "--verify" || os.Args[2] == "-v") {
 				auth.Verify()
-			} else if len(os.Args == 3) && (os.Args[2] == "--clear" || os.Args[2] == "-c") {
+			} else if len(os.Args) == 3 && (os.Args[2] == "--clear" || os.Args[2] == "-c") {
 				clear.StartOver()
+			} else if len(os.Args) == 3 && os.Args[2] == "--url" {
+				auth.Get_url_db()
 			} else {
 				fmt.Println("Unknown command | try 'x help'")
 				os.Exit(0)

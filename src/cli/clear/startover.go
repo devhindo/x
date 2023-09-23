@@ -15,26 +15,15 @@ func StartOver() {
 	license, err := lock.ReadLicenseKeyFromFile()
 
 	if err != nil {
-		fmt.Println("no license key file")
+		fmt.Println("no user logged in")
 		return
 	}
 
-	status := delete_user_from_db(license)
+	delete_user_from_db(license)
 
-	if status == 200 {
-		fmt.Println("user deleted successfully")
-	} else {
-		fmt.Println("couldn't delete user")
-	}
-	
+	lock.ClearLicenseFile()
 
-	err = lock.ClearLicenseFile()
-	if err != nil {
-		fmt.Println("Error clearing license key")
-		panic(err)
-	} else {
-		fmt.Println("Successfully cleared license key")
-	}
+	fmt.Println("user deleted successfully")
 
 }
 

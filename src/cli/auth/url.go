@@ -1,8 +1,16 @@
 package auth
 
 import (
+	"fmt"
 	"os"
+	"io"
+	"bytes"
+	"encoding/json"
+	"net/http"
+
 	"github.com/devhindo/x/src/cli/env"
+	"github.com/devhindo/x/src/cli/lock"
+	"github.com/devhindo/x/src/cli/clear"
 )
 
 func (u *User) generate_auth_url() {
@@ -19,8 +27,60 @@ func (u *User) generate_auth_url() {
 	u.Auth_URL = auth_url
 }
 
+func Get_url_db() {
+	get_url_from_db()
+}
 
 
 
 
+func get_url_from_db() {
+
+	lic, err := lock.ReadLicenseKeyFromFile()
+	if err != nil {
+		fmt.Println("couldn't generate url | try 'x auth'")
+		return
+	}
+
+	l := clear.License{
+		License: lic,
+	}
+
+	url := "http://localhost:3000/api/user/url"
+
+	req, err := http.NewRequest("POST", url, nil)
+
+	if err != nil {
+		panic(err)
+	}
+
+	jsonBytes, err := json.Marshal(l)
+	if err != nil {
+		panic(err)
+	}
+
+	req.Body = io.NopCloser(bytes.NewBuffer(jsonBytes))
+
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	defer resp.Body.Close()
+
+	var response struct {
+        AuthURL string `json:"auth_url"`
+    }
+
+    if err := json.NewDecoder(resp.Body).Decode(&response); err != nil {
+        panic(err)
+    }
+
+    fmt.Println(response.AuthURL)
+	
+}
 
