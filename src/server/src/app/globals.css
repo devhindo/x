@@ -8,16 +8,16 @@
 }
 
 body {
-  margin: 1rem;
-  padding: 2rem;
   font-family: 'VT323', monospace;
+  margin: 1rem 0;
+  line-height: 2rem;
 }
 
 fieldset {
   border: 1px solid red;
   border-radius: 1rem;
-  padding: 1rem;
-  margin: 2rem;
+  padding: .5rem;
+  margin: .5rem;
   animation: border-fade 5s infinite;
 }
 
@@ -65,4 +65,30 @@ li {
 
 li:last-child {
   border-bottom: none;
+}
+
+@media (min-width: 768px) {
+ body {
+  margin: 4rem;
+ }
+  fieldset {
+  margin: 2rem;
+  padding: 2rem;
+ }
+
+}
+
+@media (max-width: 768px) {
+  ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  * {
+    font-size: 1rem;
+  }
+  fieldset {
+    margin: 1rem;
+    padding: .3rem;
+  }
 }

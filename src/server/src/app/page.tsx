@@ -20,7 +20,7 @@ export default function Home() {
           </ul>
         </fieldset>
         <fieldset>
-          <legend>commands</legend>
+          <legend>Commands</legend>
           <ul>
             <li>tweet: <span className={styles.cmd}>x -t "hello, xcli!"</span> or <span className={styles.cmd}>x --tweet "hello, xcli!"</span></li>
           </ul>
