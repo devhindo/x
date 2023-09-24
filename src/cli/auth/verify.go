@@ -46,7 +46,8 @@ func postL(url string, l License) {
     resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonBytes))
 
     if err != nil {
-        panic(err)
+        fmt.Println("can't reach server to verify user")
+		os.Exit(0)
     }
 
     defer resp.Body.Close()

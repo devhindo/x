@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
     "encoding/json"
+	"os"
 )
 
 func Post(url string, u User) int {
@@ -18,7 +19,8 @@ func Post(url string, u User) int {
     resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonBytes))
 
     if err != nil {
-        panic(err)
+        fmt.Println("can't reach server to perform authentication")
+		os.Exit(0)
     }
 
     defer resp.Body.Close()

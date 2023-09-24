@@ -5,7 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-
+	"os"
+	
 	"github.com/devhindo/x/src/cli/lock"
 )
 
@@ -56,7 +57,8 @@ func post(url string, l License) int {
     resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonBytes))
 
     if err != nil {
-        panic(err)
+        fmt.Println("can't reach server to clear user")
+		os.Exit(0)
     }
 
     defer resp.Body.Close()
