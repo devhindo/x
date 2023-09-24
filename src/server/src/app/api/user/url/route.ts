@@ -4,18 +4,27 @@ import { createClient } from '@supabase/supabase-js'
 const supabase = createClient(process.env.SUPABASE_URL as string, process.env.SUPABASE_SECRET as string)
 
 export async function POST(request: Request) {
-    console.log("req url init")
+
     const d = await request.json()
-    const { license } = d
+    const license = d.license
+
+    if(!license) {
+        return NextResponse.json({ message: 'no license attached with the request'}, { status: 500 })
+    }
+
+    return await verify_license(license)
+
+}
+
+async function verify_license(l: string) {
 
     const { data, error } = await supabase
     .from('users')
-    .select('auth_url')
-    .eq('license', license)
+    .select()
+    .eq('license', l)
 
-    if (error) {
-        console.log("couldn't reach url from db")
-        return NextResponse.json({ message: 'error deleting user' }, { status: 500 })
+    if (error || !data) {
+        return NextResponse.json({ message: 'user is not registered yet'}, { status: 500 })
     }
 
     const auth_url = data[0].auth_url

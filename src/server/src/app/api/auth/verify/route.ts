@@ -24,7 +24,7 @@ async function verify_license(l: string) {
     if (error || !data) {
         return NextResponse.json({ message: 'user is not registered yet'}, { status: 500 })
     }
-    const auth_url = data[0].auth_url
+    
     const access_token = data[0].access_token
     
     if ( !access_token ) {
