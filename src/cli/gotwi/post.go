@@ -1,5 +1,5 @@
 package gotwi
-
+/*
 import (
 	"github.com/michimani/gotwi"
 	"github.com/michimani/gotwi/tweet/managetweet"
@@ -34,3 +34,4 @@ func PostTweet(t string) (string, error) {
 
 	return gotwi.StringValue(res.Data.ID), nil
 }
+*/
