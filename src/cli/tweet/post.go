@@ -3,16 +3,17 @@ package tweet
 import (
 	"bytes"
 	"encoding/json"
-	"net/http"
-	"io"
 	"fmt"
-	"github.com/devhindo/x/src/cli/lock"
+	"io"
+	"net/http"
 	"os"
+
+	"github.com/devhindo/x/src/cli/lock"
 )
 
 type Tweet struct {
 	License string `json:"license"`
-	Tweet string `json:"tweet"`
+	Tweet   string `json:"tweet"`
 }
 
 func POST_tweet(t string) {
@@ -24,11 +25,10 @@ func POST_tweet(t string) {
 		os.Exit(1)
 	}
 
-
-	url := "http://localhost:3000/api/tweets/post"
+	url := "https://x-blush.vercel.app/api/tweets/post"
 	tweet := Tweet{
 		License: license,
-		Tweet: t,
+		Tweet:   t,
 	}
 	// Create a new HTTP request object.
 	req, err := http.NewRequest("POST", url, nil)
@@ -42,7 +42,6 @@ func POST_tweet(t string) {
 		fmt.Println(err)
 		return
 	}
-
 
 	req.Body = io.NopCloser(bytes.NewBuffer(jsonBytes))
 

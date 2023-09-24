@@ -13,17 +13,11 @@ func main() {
 	x.Run()
 	//gotwi.PostTweet("zoo")
 	//tweet.POST_tweet()
-	//api.GET("http://localhost:3000/api/auth")
+	//api.GET("https://x-blush.vercel.app/api/auth")
 	//user := api.User{
 	//	Username: "test",
 	//	Secret: "test",
 	//}
-	//api.POST("http://localhost:3000/api/auth", user)
+	//api.POST("https://x-blush.vercel.app/api/auth", user)
 	//clear.StartOver()
 }
-
-
-
-
-
-

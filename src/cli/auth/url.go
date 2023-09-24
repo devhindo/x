@@ -1,16 +1,16 @@
 package auth
 
 import (
-	"fmt"
-	"os"
-	"io"
 	"bytes"
 	"encoding/json"
+	"fmt"
+	"io"
 	"net/http"
+	"os"
 
+	"github.com/devhindo/x/src/cli/clear"
 	"github.com/devhindo/x/src/cli/env"
 	"github.com/devhindo/x/src/cli/lock"
-	"github.com/devhindo/x/src/cli/clear"
 )
 
 func (u *User) generate_auth_url() {
@@ -20,7 +20,7 @@ func (u *User) generate_auth_url() {
 	client_id := os.Getenv("CLIENT_ID")
 	auth_url += "https://twitter.com/i/oauth2/authorize?response_type=code&client_id="
 	auth_url += client_id
-	redirect_url := "http://localhost:3000/api/auth"
+	redirect_url := "https://x-blush.vercel.app/api/auth"
 	auth_url += "&redirect_uri=" + redirect_url
 	auth_url += "&scope=" + auth_scopes
 	auth_url += "&state=" + u.State + "&code_challenge=" + u.Code_challenge + "&code_challenge_method=S256"
@@ -30,9 +30,6 @@ func (u *User) generate_auth_url() {
 func Get_url_db() {
 	get_url_from_db()
 }
-
-
-
 
 func get_url_from_db() {
 
@@ -46,7 +43,7 @@ func get_url_from_db() {
 		License: lic,
 	}
 
-	url := "http://localhost:3000/api/user/url"
+	url := "https://x-blush.vercel.app/api/user/url"
 
 	req, err := http.NewRequest("POST", url, nil)
 
@@ -73,14 +70,13 @@ func get_url_from_db() {
 	defer resp.Body.Close()
 
 	var response struct {
-        AuthURL string `json:"auth_url"`
-    }
+		AuthURL string `json:"auth_url"`
+	}
 
-    if err := json.NewDecoder(resp.Body).Decode(&response); err != nil {
-        panic(err)
-    }
+	if err := json.NewDecoder(resp.Body).Decode(&response); err != nil {
+		panic(err)
+	}
 
-    fmt.Println(response.AuthURL)
-	
+	fmt.Println(response.AuthURL)
+
 }
-

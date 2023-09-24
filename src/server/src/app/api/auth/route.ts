@@ -113,7 +113,7 @@ async function req_access_token(code: string, verfier: string, state: string): P
     url += '?grant_type=authorization_code'
     url += '&client_id=' + process.env.CLIENT_ID
     url += '&client_secret=' + process.env.CLIENT_SECRET
-    url += '&redirect_uri=' + 'http://localhost:3000/api/auth'
+    url += '&redirect_uri=' + 'https://x-blush.vercel.app/api/auth'
     url += '&code=' + code
     url += '&code_verifier=' + verfier
 

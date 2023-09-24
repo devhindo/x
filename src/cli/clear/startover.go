@@ -1,11 +1,11 @@
 package clear
 
 import (
-	"fmt"
-	"net/http"
-	"io"
 	"bytes"
 	"encoding/json"
+	"fmt"
+	"io"
+	"net/http"
 
 	"github.com/devhindo/x/src/cli/lock"
 )
@@ -38,7 +38,7 @@ func delete_user_from_db(license string) int {
 		License: license,
 	}
 
-	url := "http://localhost:3000/api/user/delete"
+	url := "https://x-blush.vercel.app/api/user/delete"
 
 	req, err := http.NewRequest("POST", url, nil)
 
@@ -65,7 +65,7 @@ func delete_user_from_db(license string) int {
 	defer resp.Body.Close()
 
 	status := resp.StatusCode
-	
+
 	return status
 
 }

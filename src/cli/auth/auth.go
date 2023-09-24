@@ -2,14 +2,15 @@ package auth
 
 import (
 	//"os"
-	"github.com/devhindo/x/src/cli/lock"
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"io"
-	"net/http"
-    "encoding/json"
 	"log"
+	"net/http"
 	"os"
+
+	"github.com/devhindo/x/src/cli/lock"
 )
 
 // func check_authentication() {}
@@ -33,7 +34,7 @@ func checkIfUserExists() {
 	}
 }
 
-type data struct{
+type data struct {
 	Key string `json:"key"`
 }
 
@@ -46,13 +47,12 @@ func Verify() bool {
 
 	k := data{Key: key}
 
-	url := "http://localhost:3000/api/auth/verify"
+	url := "https://x-blush.vercel.app/api/auth/verify"
 
 	req, err := http.NewRequest("POST", url, nil)
 	if err != nil {
 		panic(err)
 	}
-
 
 	jsonBytes, err := json.Marshal(k)
 	if err != nil {
@@ -60,8 +60,6 @@ func Verify() bool {
 	}
 
 	req.Body = io.NopCloser(bytes.NewBuffer(jsonBytes))
-
-
 
 	req.Header.Set("Content-Type", "application/json")
 
@@ -79,8 +77,6 @@ func Verify() bool {
 	//	log.Fatal(err)
 	//}
 
-
-	
 	status := resp.StatusCode
 
 	if status != 200 {
