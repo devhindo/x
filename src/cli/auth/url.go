@@ -6,20 +6,16 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"os"
 
 	"github.com/devhindo/x/src/cli/clear"
-	"github.com/devhindo/x/src/cli/env"
 	"github.com/devhindo/x/src/cli/lock"
 )
 
 func (u *User) generate_auth_url() {
-	env.Load()
 	auth_url := ""
 	auth_scopes := "tweet.read%20tweet.write%20users.read%20users.read%20follows.read%20follows.write%20offline.access"
-	client_id := os.Getenv("CLIENT_ID")
 	auth_url += "https://twitter.com/i/oauth2/authorize?response_type=code&client_id="
-	auth_url += client_id
+	auth_url += "emJHZzZHMUdHMF9QRlRIdk45QjY6MTpjaQ"
 	redirect_url := "https://x-blush.vercel.app/api/auth"
 	auth_url += "&redirect_uri=" + redirect_url
 	auth_url += "&scope=" + auth_scopes

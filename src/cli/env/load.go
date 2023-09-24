@@ -1,3 +1,4 @@
+/*
 package env
 
 import (
@@ -15,3 +16,4 @@ func Load() {
 	os.Getenv("TWITTER_API_KEY")
 	os.Getenv("TWITTER_API_SECRET_KEY")
 }
+*/
