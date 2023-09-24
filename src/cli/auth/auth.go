@@ -5,8 +5,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io"
-	"log"
 	"net/http"
 	"os"
 
@@ -49,35 +47,7 @@ func Verify() bool {
 
 	url := "https://x-blush.vercel.app/api/auth/verify"
 
-	req, err := http.NewRequest("POST", url, nil)
-	if err != nil {
-		panic(err)
-	}
-
-	jsonBytes, err := json.Marshal(k)
-	if err != nil {
-		panic(err)
-	}
-
-	req.Body = io.NopCloser(bytes.NewBuffer(jsonBytes))
-
-	req.Header.Set("Content-Type", "application/json")
-
-	// Send the request
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer resp.Body.Close()
-
-	// Handle the response
-	//body, err := io.ReadAll(resp.Body)
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
-
-	status := resp.StatusCode
+	status := postL(url, k)
 
 	if status != 200 {
 		fmt.Println("you are not authenticated | try 'x auth'")
@@ -88,9 +58,20 @@ func Verify() bool {
 	}
 }
 
-/*
-	if !isAuthenticated() {
-		fmt.Println("You are not authenticated.")
-		os.Exit(1)
-	}
-*/
+func postL(url string, k data) int {
+
+    jsonBytes, err := json.Marshal(k)
+    if err != nil {
+        panic(err)
+    }
+
+    resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonBytes))
+
+    if err != nil {
+        panic(err)
+    }
+
+    defer resp.Body.Close()
+
+    return resp.StatusCode
+}
