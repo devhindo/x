@@ -21,8 +21,8 @@ func open(url string) error {
 
     switch runtime.GOOS {
     case "windows":
-        cmd = "cmd"
-        args = []string{"/c", "start"}
+      cmd = "rundll32"
+      args = []string{"url.dll,FileProtocolHandler"}
     case "darwin":
         cmd = "open"
     default: // "linux", "freebsd", "openbsd", "netbsd"
