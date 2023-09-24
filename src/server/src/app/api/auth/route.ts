@@ -4,7 +4,7 @@ import { createClient } from '@supabase/supabase-js'
 const supabase = createClient(process.env.SUPABASE_URL as string, process.env.SUPABASE_SECRET as string)
 
 export async function GET(request: Request) {
-    
+
     const { searchParams } = new URL(request.url)
 
     const state = searchParams.get("state")
@@ -103,20 +103,21 @@ grant_type=authorization_code
 
 // todo make the req more secure by performing a porpper post request
 async function req_access_token(code: string, verfier: string, state: string): Promise<[string, string, number]> {
-    let url = 'https://api.twitter.com/2/oauth2/token'
-    url += '?grant_type=authorization_code'
-    url += '&client_id=' + process.env.CLIENT_ID
-    url += '&client_secret=' + process.env.CLIENT_SECRET
-    url += '&redirect_uri=' + 'https://x-blush.vercel.app/api/auth'
-    url += '&code=' + code
-    url += '&code_verifier=' + verfier
+    const data = new URLSearchParams()
+    data.append('grant_type', 'authorization_code')
+    data.append('client_id', process.env.CLIENT_ID as string)
+    data.append('client_secret', process.env.CLIENT_SECRET as string)
+    data.append('redirect_uri', 'https://x-blush.vercel.app/api/auth')
+    data.append('code', code)
+    data.append('code_verifier', verfier)
 
-    const response = await fetch(url, {
+    const response = await fetch('https://api.twitter.com/2/oauth2/token', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Authorization': 'Basic ' + generate_CONFIDENTIAL_CLIENT_AUTH_HEADER(),
         },
+        body: data
     })
 
     const json = await response.json()
