@@ -6,50 +6,24 @@ import (
 	"io"
 	"net/http"
     "encoding/json"
-
-	"github.com/devhindo/x/src/cli/lock"
-
 )
 
-func POST(url string, u User) {
-		
-	jsonBytes, err := json.Marshal(u)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+func Post(url string, u User) int {
 
-	resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonBytes))
-	if err != nil {
-		panic(err)
-	}
+    jsonBytes, err := json.Marshal(u)
+    if err != nil {
+        panic(err)
+    }
 
-	defer resp.Body.Close()
+    resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonBytes))
 
-	status := resp.StatusCode
-	fmt.Println(status)
+    if err != nil {
+        panic(err)
+    }
 
-	//body, err := io.ReadAll(resp.Body)
-	//if err != nil {
-    //		panic(err)
-	//}
+    defer resp.Body.Close()
 
-	//Convert bytes to String and print
-	//jsonStr := string(body)
-	//fmt.Println("Response: ", jsonStr)
-
-	
-	if status != 200 {
-		fmt.Println("error adding user")
-	} else {
-		
-		err := lock.WriteLicenseKeyToFile(u.License)
-		if err != nil {
-			fmt.Println("coudln't write license key to file")
-			return
-		}
-	}
-
+    return resp.StatusCode
 }
 
 func GET(url string) {

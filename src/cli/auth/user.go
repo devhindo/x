@@ -1,7 +1,10 @@
 package auth
 
 import (
+	"fmt"
+
 	"github.com/devhindo/x/src/cli/utils"
+	"github.com/devhindo/x/src/cli/lock"
 )
 
 type User struct {
@@ -24,7 +27,18 @@ func newUser() *User {
 }
 
 func (u *User) add_user_to_db() {
-	POST("https://x-blush.vercel.app/api/auth/add", *u)
+	status := Post("https://x-blush.vercel.app/api/auth/add", *u)
+
+	if status != 200 {
+		fmt.Println("error adding user")
+	} else {
+		
+		err := lock.WriteLicenseKeyToFile(u.License)
+		if err != nil {
+			fmt.Println("coudln't write license key to file")
+			return
+		}
+	}
 }
 
 func (u *User) open_browser_to_auth_url() {
