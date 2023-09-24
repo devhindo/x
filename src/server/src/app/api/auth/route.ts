@@ -4,7 +4,7 @@ import { createClient } from '@supabase/supabase-js'
 const supabase = createClient(process.env.SUPABASE_URL as string, process.env.SUPABASE_SECRET as string)
 
 export async function GET(request: Request) {
-    console.log("start of requesting access token")
+    
     const { searchParams } = new URL(request.url)
 
     const state = searchParams.get("state")
@@ -30,14 +30,8 @@ export async function GET(request: Request) {
     } else {
         console.log("access token not inserted")
     }
-    //console.log(code_verifier)
 
-    // todo: save all this in supabase
-
-    // todo: response with access token to the cli upon post request
-
-    // return access token
-    return NextResponse.json({ access_token })
+    return NextResponse.json({ message: "Authentication successful" })
 }
 
 
