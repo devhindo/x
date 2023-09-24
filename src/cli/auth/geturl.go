@@ -29,7 +29,7 @@ type License struct {
 }
 
 type response struct {
-    Auth_url string `json:"auth_url"`
+    Message string `json:"message"`
 }
 
 func postL(url string, l License) {
@@ -58,5 +58,5 @@ func postL(url string, l License) {
 		err = json.Unmarshal(body, &r)
 
 		//Convert bytes to String and print
-		fmt.Println(r.Auth_url)
+		fmt.Println(r.Message)
 }

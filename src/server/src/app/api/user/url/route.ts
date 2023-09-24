@@ -29,5 +29,5 @@ async function verify_license(l: string) {
 
     const auth_url = data[0].auth_url
     
-    return NextResponse.json({ auth_url:  auth_url}, { status: 200 })
+    return NextResponse.json({ message:  auth_url}, { status: 200 })
 }
