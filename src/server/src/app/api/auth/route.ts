@@ -84,24 +84,12 @@ async function get_user_data(state: string) {
 
 
 
-export function generate_CONFIDENTIAL_CLIENT_AUTH_HEADER() {
+function generate_CONFIDENTIAL_CLIENT_AUTH_HEADER() {
     const CLIENT_ID = process.env.CLIENT_ID
     const CLIENT_SECRET = process.env.CLIENT_SECRET
     return Buffer.from(CLIENT_ID + ":" + CLIENT_SECRET).toString('base64')
 }
 
-/*
-POST https://authorization-server.com/token
-
-grant_type=authorization_code
-&client_id=i1zzqeXYK_4ZeAEU5_u6b8Qf
-&client_secret=UaOzV9MrAijJMDmhucCBRo2XrRlPIfqBg1b0HCXePsDyqm88
-&redirect_uri=https://www.oauth.com/playground/authorization-code-with-pkce.html
-&code=HV24toek3g0qCYg3zZZcC4lSjE4IlI3nAZBRAK3thKyGeVQT
-&code_verifier=mdUIOYqdl9r5EnV0hAoB6zznhaxqGTY-rXu-jQRwpDL5BE86
-*/
-
-// todo make the req more secure by performing a porpper post request
 async function req_access_token(code: string, verfier: string, state: string): Promise<[string, string, number]> {
     const data = new URLSearchParams()
     data.append('grant_type', 'authorization_code')
@@ -121,8 +109,7 @@ async function req_access_token(code: string, verfier: string, state: string): P
     })
 
     const json = await response.json()
-    console.log(json)
-    // extract access_token and refresh_token
+
     const { access_token, refresh_token, expires_in } = json
 
     return [access_token, refresh_token, expires_in]

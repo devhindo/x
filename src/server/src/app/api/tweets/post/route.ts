@@ -1,7 +1,6 @@
 import { Client } from "twitter-api-sdk";
 import { NextResponse } from "next/server";
 import { createClient } from '@supabase/supabase-js'
-import { generate_CONFIDENTIAL_CLIENT_AUTH_HEADER } from "../../auth/route";
 
 const supabase = createClient(process.env.SUPABASE_URL as string, process.env.SUPABASE_SECRET as string)
 
@@ -95,6 +94,12 @@ async function get_refresh_token(license: string): Promise<[boolean,string]> {
         const { refresh_token } = data
         return [true,refresh_token as string]   
     }
+}
+
+export function generate_CONFIDENTIAL_CLIENT_AUTH_HEADER() {
+    const CLIENT_ID = process.env.CLIENT_ID
+    const CLIENT_SECRET = process.env.CLIENT_SECRET
+    return Buffer.from(CLIENT_ID + ":" + CLIENT_SECRET).toString('base64')
 }
 
 async function POST_new_access_token(license: string, refresh_old_token: string): Promise<[string, string]> {
