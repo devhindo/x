@@ -31,7 +31,7 @@ export async function GET(request: Request) {
         console.log("access token not inserted")
     }
 
-    return NextResponse.json({ message: "Authentication successful" })
+    return NextResponse.json({ message: "Authentication successful. run 'x auth -v' to complete authentication." })
 }
 
 
