@@ -11,18 +11,18 @@ import (
 	"github.com/devhindo/x/src/cli/lock"
 )
 
-type data struct {
-	Key string `json:"key"`
+type License struct {
+	License string `json:"license"`
 }
 
 func Verify() bool {
-	key, err := lock.ReadLicenseKeyFromFile()
+	l, err := lock.ReadLicenseKeyFromFile()
 	if err != nil {
 		fmt.Println("you are not authenticated | try 'x auth'")
 		os.Exit(1)
 	}
 
-	k := data{Key: key}
+	k := License{License: l}
 
 	url := "https://x-blush.vercel.app/api/auth/verify"
 
@@ -36,9 +36,9 @@ type response struct {
     Message string `json:"message"`
 }
 
-func postL(url string, k data) {
+func postL(url string, l License) {
 
-    jsonBytes, err := json.Marshal(k)
+    jsonBytes, err := json.Marshal(l)
     if err != nil {
         panic(err)
     }
@@ -57,7 +57,10 @@ func postL(url string, k data) {
 			panic(err)
 		}
 
+		var r response
+
+		err = json.Unmarshal(body, &r)
+
 		//Convert bytes to String and print
-		jsonStr := string(body)
-		fmt.Println("Response: ", jsonStr)
+		fmt.Println(r.Message)
 }
