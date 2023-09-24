@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
 
 	"github.com/devhindo/x/src/cli/lock"
@@ -32,7 +31,7 @@ type License struct {
 	License string `json:"license"`
 }
 
-func delete_user_from_db(license string) int {
+func delete_user_from_db(license string) {
 
 	l := License{
 		License: license,
@@ -40,32 +39,27 @@ func delete_user_from_db(license string) int {
 
 	url := "https://x-blush.vercel.app/api/user/delete"
 
-	req, err := http.NewRequest("POST", url, nil)
+	status := post(url, l)
 
-	if err != nil {
-		panic(err)
+	if status != 200 {
+		fmt.Println("error deleting user from db")
 	}
+}
 
-	jsonBytes, err := json.Marshal(l)
-	if err != nil {
-		panic(err)
-	}
+func post(url string, l License) int {
 
-	req.Body = io.NopCloser(bytes.NewBuffer(jsonBytes))
+    jsonBytes, err := json.Marshal(l)
+    if err != nil {
+        panic(err)
+    }
 
-	req.Header.Set("Content-Type", "application/json")
+    resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonBytes))
 
-	client := &http.Client{}
-	resp, err := client.Do(req)
+    if err != nil {
+        panic(err)
+    }
 
-	if err != nil {
-		fmt.Println(err)
-	}
+    defer resp.Body.Close()
 
-	defer resp.Body.Close()
-
-	status := resp.StatusCode
-
-	return status
-
+    return resp.StatusCode
 }
