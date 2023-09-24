@@ -25,6 +25,12 @@ export default function Home() {
             <li>tweet: <span className={styles.cmd}>x -t "hello, xcli!"</span> or <span className={styles.cmd}>x --tweet "hello, xcli!"</span></li>
           </ul>
         </fieldset>
+        <fieldset>
+          <legend>Error Handling</legend>
+          <ul>
+            <li>if anything went wrong run <span className={styles.cmd}>x auth -c</span> or <span className={styles.cmd}>x auth --clear</span> and start over from <span className={styles.step}>Authorization step</span></li>
+          </ul>
+        </fieldset>
       </main>
       <h1><a href="https://github.com/devhindo/x" target='_blank'>source code</a></h1>
     </div>
