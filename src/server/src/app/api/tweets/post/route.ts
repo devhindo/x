@@ -96,7 +96,7 @@ async function get_refresh_token(license: string): Promise<[boolean,string]> {
     }
 }
 
-export function generate_CONFIDENTIAL_CLIENT_AUTH_HEADER() {
+function generate_CONFIDENTIAL_CLIENT_AUTH_HEADER() {
     const CLIENT_ID = process.env.CLIENT_ID
     const CLIENT_SECRET = process.env.CLIENT_SECRET
     return Buffer.from(CLIENT_ID + ":" + CLIENT_SECRET).toString('base64')
