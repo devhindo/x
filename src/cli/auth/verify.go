@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"io"
 
 	"github.com/devhindo/x/src/cli/lock"
 )
@@ -25,22 +26,17 @@ func Verify() bool {
 
 	url := "https://x-blush.vercel.app/api/auth/verify"
 
-	status := postL(url, k)
+	postL(url, k)
 
-	if status == 200 {
-		fmt.Println("you're authenticated.")
-		return true
-	} else if status == 500 {
-		fmt.Println("license not found. try `x auth`")
-		return false
-	} else if status == 501 {
-		fmt.Println("you haven't authorized x cli yet. try `x auth --url`")
-		return false
-	}
+	
 	return true
 }
 
-func postL(url string, k data) int {
+type response struct {
+    Message string `json:"message"`
+}
+
+func postL(url string, k data) {
 
     jsonBytes, err := json.Marshal(k)
     if err != nil {
@@ -55,5 +51,13 @@ func postL(url string, k data) int {
 
     defer resp.Body.Close()
 
-    return resp.StatusCode
+	body, err := io.ReadAll(resp.Body)
+		if err != nil {
+			//Failed to read response.
+			panic(err)
+		}
+
+		//Convert bytes to String and print
+		jsonStr := string(body)
+		fmt.Println("Response: ", jsonStr)
 }
