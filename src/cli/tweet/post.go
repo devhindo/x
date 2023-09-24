@@ -30,36 +30,39 @@ func POST_tweet(t string) {
 		License: license,
 		Tweet:   t,
 	}
-	// Create a new HTTP request object.
-	req, err := http.NewRequest("POST", url, nil)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+	
+	postT(url, tweet)
+}
 
-	jsonBytes, err := json.Marshal(tweet)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+type response struct {
+    Message string `json:"message"`
+}
 
-	req.Body = io.NopCloser(bytes.NewBuffer(jsonBytes))
+func postT(url string, t Tweet) {
 
-	req.Header.Set("Content-Type", "application/json")
+    jsonBytes, err := json.Marshal(t)
+    if err != nil {
+        panic(err)
+    }
 
-	// Send the request
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		fmt.Println(err)
-	}
-	defer resp.Body.Close()
+    resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonBytes))
 
-	// Handle the response
-	status := resp.StatusCode
-	if status == 200 {
-		fmt.Println("tweet posted!")
-	} else if status == 401 {
-		fmt.Println("couldn't get access token | try 'x auth'")
-	}
+    if err != nil {
+        panic(err)
+    }
+
+    defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+		if err != nil {
+			//Failed to read response.
+			panic(err)
+		}
+
+		var r response
+
+		err = json.Unmarshal(body, &r)
+
+		//Convert bytes to String and print
+		fmt.Println(r.Message)
 }
