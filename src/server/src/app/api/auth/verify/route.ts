@@ -8,14 +8,11 @@ export async function POST(request: Request) {
 
     const license = data.license
 
-    const license_exist = await verify_license(license)
-
-    if (!license_exist) {
-        return NextResponse.json({ message: 'license not found'}, { status: 500 })
+    if(!license) {
+        return NextResponse.json({ message: 'no license'}, { status: 500 })
     }
-
-    return NextResponse.json({ message: 'verified'}, { status: 200 })
-
+    
+    return await verify_license(license)
 }
 
 async function verify_license(l: string) {
@@ -25,16 +22,16 @@ async function verify_license(l: string) {
     .eq('license', l)
 
     if (error || !data) {
-        return false
+        return NextResponse.json({ message: 'license not found'}, { status: 500 })
     }
+    const auth_url = data[0].auth_url
+    const access_token = data[0].access_token
     
-    const { license: license, access_token: access_token } = data[0]
-    
-    if ( !license || !access_token ) {
-        return false
+    if ( !access_token ) {
+        return NextResponse.json({ message: 'no access_token'}, { status: 501 })
     }
 
-    return true
+    return NextResponse.json({ message: 'verified'}, { status: 200 })
 }
 
 export async function GET(request: Request) {
