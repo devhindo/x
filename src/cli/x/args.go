@@ -34,6 +34,10 @@ func HandleArgs() {
 			tweet.POST_tweet(os.Args[2])
 		case "--tweet":
 			tweet.POST_tweet(os.Args[2])
+		case "--version":
+			Version()
+		case "-v":
+			Version()
 		default:
 			fmt.Println("Unknown command | try 'x help'")
 			os.Exit(0)
