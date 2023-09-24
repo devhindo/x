@@ -5,8 +5,8 @@ const supabase = createClient(process.env.SUPABASE_URL as string , process.env.S
 
 export async function POST(request: Request) {
     const data = await request.json()
+
     const license = data.license
-    console.log(license)
 
     const license_exist = await verify_license(license)
 
@@ -18,15 +18,22 @@ export async function POST(request: Request) {
 
 }
 
-async function verify_license(license: string) {
+async function verify_license(l: string) {
     const { data, error } = await supabase
     .from('users')
     .select()
-    .eq('license', license)
+    .eq('license', l)
 
     if (error || !data) {
         return false
     }
+    
+    const { license: license, access_token: access_token } = data[0]
+    
+    if ( !license || !access_token ) {
+        return false
+    }
+
     return true
 }
 
