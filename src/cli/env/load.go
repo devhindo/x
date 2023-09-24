@@ -1,5 +1,5 @@
-/*
 package env
+/*
 
 import (
 	"github.com/joho/godotenv"
