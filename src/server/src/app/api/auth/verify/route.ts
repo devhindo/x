@@ -31,7 +31,7 @@ async function verify_license(l: string) {
         return NextResponse.json({ message: 'you haven\'t authorized X CLI yet'}, { status: 501 })
     }
 
-    return NextResponse.json({ message: 'verified'}, { status: 200 })
+    return NextResponse.json({ message: "verified. post a tweet using 'x -t \"first tweet from terminal!\""}, { status: 200 })
 }
 
 export async function GET(request: Request) {
