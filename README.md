@@ -1,8 +1,4 @@
-<p align="center">
-  <img src="./assets/x.png" alt="Logo" height=170>
-</p>
-
-<p align="center">
+![preview](./assets/preview.gif)
 
 <div align="center"><i>CLI tool to interact with x (twitter) from terminal</i></div>
 
@@ -16,6 +12,7 @@
 - [Authentication](#authentication)
 
 ## Usage
+
 
 ### Main Usage
 
