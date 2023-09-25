@@ -19,7 +19,7 @@
 
 ### Main Usage
 
-- post a tweet from terminal like this
+- post tweets from terminal like this
 
 ```bash
 x -t "first tweet from terminal!"
@@ -50,27 +50,30 @@ Commands
 
 - download the verion that matches computer's operating system from [latest release](https://github.com/devhindo/x/releases/latest)
 - open a terminal in the directory where the file was downloaded
-- for example assume the file name is `x-linux-amd64.tar.gz`
-- remove any previous downloaded version of x 
+- for example assume the file name is `x_Linux_x86_64.tar.gz`
+- remove any previous downloaded version of x
 
 ```bash
     rm -rf /usr/local/x
 ```
 
-- run the following command to extract the file 
+- run the following command to extract the file
 
 ```bash
-tar -C /usr/local -xzf x-linux-amd64.tar.gz
+tar -C /usr/local -xzf x_Linux_x86_64.tar.gz
 ```
 
 - Add `/usr/local/x` to the PATH environment variable
 - Do this by adding the following line to your $HOME/.profile or /etc/profile (for a system-wide installation):
 
 ```bash
+nano $HOME/.profile
+
+# and add this line at the end of the file
 export PATH=$PATH:/usr/local/x
 ```
 
-- open a new terminal or run the following command to update the current session
+- run the following command to update the current session
 
 ```bash
 source $HOME/.profile 
@@ -79,7 +82,7 @@ source $HOME/.profile
 - verify the installation by running the following command
 
 ```bash
-x --version
+x version
 ```
 
 - if the installation was successful, you should see the version of x that was installed
