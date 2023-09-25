@@ -3,6 +3,7 @@ package x
 import (
 	"os"
 	"fmt"
+
 	"github.com/devhindo/x/src/cli/help"
 	"github.com/devhindo/x/src/cli/auth"
 	"github.com/devhindo/x/src/cli/tweet"
@@ -13,9 +14,14 @@ import (
 func HandleArgs() {
 	checkArgs()
 	switch os.Args[1] {
+		case "help":
+			checkArgsequals2()
+			help.Help()
 		case "--help":
+			checkArgsequals2()
 			help.Help()
 		case "-h":
+			checkArgsequals2()
 			help.Help()
 		case "auth":
 			if len(os.Args) == 2 {
@@ -35,8 +41,13 @@ func HandleArgs() {
 		case "--tweet":
 			tweet.POST_tweet(os.Args[2])
 		case "--version":
+			checkArgsequals2()
 			Version()
 		case "-v":
+			checkArgsequals2()
+			Version()
+		case "version":
+			checkArgsequals2()
 			Version()
 		default:
 			fmt.Println("Unknown command | try 'x help'")
@@ -47,6 +58,13 @@ func HandleArgs() {
 func checkArgs() {
 	if len(os.Args) < 2 {
 		fmt.Println("No command given | try 'x help'")
+		os.Exit(0)
+	}
+}
+
+func checkArgsequals2() {
+	if len(os.Args) != 2 {
+		fmt.Println("Unknown command | try 'x help'")
 		os.Exit(0)
 	}
 }

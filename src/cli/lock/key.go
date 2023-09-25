@@ -3,10 +3,11 @@ package lock
 import (
 	"encoding/base64"
 	"fmt"
-	"github.com/google/uuid"
 	"io"
 	"os"
 	"path/filepath"
+	
+	"github.com/google/uuid"
 )
 
 func GenerateLicenseKey() (string, error) {

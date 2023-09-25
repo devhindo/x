@@ -3,5 +3,5 @@ package x
 import "fmt"
 
 func Version() {
-	fmt.Println("xcli v1.0.0")
+	fmt.Println("x CLI v1.0.0")
 }

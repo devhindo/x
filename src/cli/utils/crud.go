@@ -10,7 +10,6 @@ import (
 
 )
 
-// duplicate - to remove later
 type User struct {
 	State string `json:"state"`
 	Auth_URL string `json:"auth_url"`
