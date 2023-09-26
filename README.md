@@ -51,19 +51,20 @@ Commands
 - remove any previous downloaded version of x
 
 ```bash
-    rm -rf /usr/local/x
+sudo rm -rf /usr/local/x
 ```
 
 - run the following command to extract the file
 
 ```bash
-tar -C /usr/local -xzf x_Linux_x86_64.tar.gz
+sudo tar -C /usr/local -xzf x_Linux_x86_64.tar.gz
 ```
 
 - Add `/usr/local/x` to the PATH environment variable
 - Do this by adding the following line to your $HOME/.profile or /etc/profile (for a system-wide installation):
 
 ```bash
+# opening the file
 nano $HOME/.profile
 
 # and add this line at the end of the file
