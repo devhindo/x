@@ -9,7 +9,7 @@ export default function Home() {
         <fieldset>
           <legend>Installation</legend>
           <ul>
-            <li></li>
+            <li>check repo readme at <a href="https://github.com/devhindo/x" className={styles.cmd}>devhindo/x</a></li>
           </ul>
         </fieldset>
         <fieldset>
