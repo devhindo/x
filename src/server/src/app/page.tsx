@@ -16,7 +16,7 @@ export default function Home() {
           <legend>Authorization</legend>
           <ul>
             <li>Run <span className={styles.cmd}>x auth</span></li>
-            <li>Then <span className={styles.cmd}>x auth -v</span> or <span className={styles.cmd}>x auth --validate</span></li>
+            <li>Then <span className={styles.cmd}>x auth -v</span> or <span className={styles.cmd}>x auth --verify</span></li>
           </ul>
         </fieldset>
         <fieldset>
