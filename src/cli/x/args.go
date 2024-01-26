@@ -36,22 +36,35 @@ func HandleArgs() {
 				fmt.Println("Unknown command | try 'x help'")
 				os.Exit(0)
 			}
+		case "t":
+			checkTweetArgs()
+			tweet.POST_tweet(os.Args[2])
 		case "-t":
+			checkTweetArgs()
 			tweet.POST_tweet(os.Args[2])
-		case "--tweet":
+		case "tweet":
+			checkTweetArgs()
 			tweet.POST_tweet(os.Args[2])
-		case "--version":
-			checkArgsequals2()
-			Version()
-		case "-v":
-			checkArgsequals2()
-			Version()
 		case "version":
 			checkArgsequals2()
 			Version()
+		case "v":
+			checkArgsequals2()
+			Version()
+		case "f": //  x -t "hi" 5h6m7s
+			tweet.PostFutureTweet(os.Args)
+		case "-f":
+			tweet.PostFutureTweet(os.Args)
 		default:
 			fmt.Println("Unknown command | try 'x help'")
 			os.Exit(0)
+	}
+}
+
+func checkTweetArgs() {
+	if len(os.Args) < 3 {
+		fmt.Println("No tweet given | try 'x help'")
+		os.Exit(0)
 	}
 }
 

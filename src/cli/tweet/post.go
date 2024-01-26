@@ -54,7 +54,7 @@ func postT(url string, t Tweet) {
 
     defer resp.Body.Close()
 
-	body, err := io.ReadAll(resp.Body)
+	_, err = io.ReadAll(resp.Body)
 		if err != nil {
 			//Failed to read response.
 			panic(err)
@@ -62,7 +62,6 @@ func postT(url string, t Tweet) {
 
 		var r response
 
-		err = json.Unmarshal(body, &r)
 
 		//Convert bytes to String and print
 		fmt.Println(r.Message)
