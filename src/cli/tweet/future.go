@@ -7,6 +7,10 @@ import (
 	"log"
 	"strconv"
 	"strings"
+	"bytes"
+	"encoding/json"
+	"io"
+	"net/http"
 
 	"github.com/devhindo/x/src/cli/lock"
 )
@@ -20,7 +24,8 @@ type FutureTweet struct {
 
 func PostFutureTweet(c []string) {
 	
-	
+	url := "http://localhost:3000/api/tweets/future"
+
 	// x t "hi" 5h6m7s
 
 	tweetText, tweetTime, err := handleFutureTweetArgs(c)
@@ -49,8 +54,6 @@ func PostFutureTweet(c []string) {
 		Hours: hrs,
 		Minutes: mins,
 	}
-	
-	url := ""
 
 	err = postFutureTweetToServer(url, tweet)
 
@@ -62,6 +65,32 @@ func PostFutureTweet(c []string) {
 
 
 func postFutureTweetToServer(url string, t FutureTweet) error {
+	fmt.Println("unmarchalling")
+	jsonBytes, err := json.Marshal(t)
+    if err != nil {
+        panic(err)
+    }
+
+    resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonBytes))
+	fmt.Println("posting")
+    if err != nil {
+        return fmt.Errorf("can't reach server to post a tweet")
+    }
+	fmt.Println("before defer")
+    defer resp.Body.Close()
+	fmt.Println("after defer")
+	_, err = io.ReadAll(resp.Body)
+		if err != nil {
+			//Failed to read response.
+			return fmt.Errorf("can't read server response")
+		}
+
+		var r response
+
+
+		//Convert bytes to String and print
+		fmt.Println(r.Message)
+
 	return nil
 }
 
