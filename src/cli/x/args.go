@@ -52,8 +52,10 @@ func HandleArgs() {
 			checkArgsequals2()
 			Version()
 		case "f": //  x -t "hi" 5h6m7s
+			checkArgsequals2()
 			tweet.PostFutureTweet(os.Args)
 		case "-f":
+			checkArgsequals2()
 			tweet.PostFutureTweet(os.Args)
 		default:
 
@@ -88,4 +90,11 @@ func checkArgsequals2() {
 	}
 }
 
+func checkFutureTweetArgs() {
+	if len(os.Args) < 4 {
+		fmt.Println("No tweet given | try 'x help'")
+		os.Exit(0)
+	}
+	
+}
 
