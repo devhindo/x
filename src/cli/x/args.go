@@ -56,8 +56,14 @@ func HandleArgs() {
 		case "-f":
 			tweet.PostFutureTweet(os.Args)
 		default:
-			fmt.Println("Unknown command | try 'x help'")
-			os.Exit(0)
+
+			if len(os.Args) != 2 {
+				fmt.Println("Unknown command | try 'x help'")
+				os.Exit(0)
+			}
+			
+			tweet.POST_tweet(os.Args[1])
+			
 	}
 }
 
@@ -81,4 +87,5 @@ func checkArgsequals2() {
 		os.Exit(0)
 	}
 }
+
 
