@@ -37,8 +37,11 @@ func HandleArgs() {
 				os.Exit(0)
 			}
 		case "-t":
+			checkArgsequals3()
+			fmt.Println(len(os.Args))
 			tweet.POST_tweet(os.Args[2])
 		case "--tweet":
+			checkArgsequals3()
 			tweet.POST_tweet(os.Args[2])
 		case "--version":
 			checkArgsequals2()
@@ -75,4 +78,9 @@ func checkArgsequals2() {
 	}
 }
 
-
+func checkArgsequals3() {
+	if len(os.Args) != 3 {
+		fmt.Println("Unknown command | try 'x help'")
+		os.Exit(0)
+	}
+}
