@@ -90,6 +90,8 @@ func checkArgsequals2() {
 	}
 }
 
+// x -f "hi" -w 5h6m7s
+// x -f "hi" -d 
 func checkFutureTweetArgs() {
 	if len(os.Args) < 4 {
 		fmt.Println("No tweet given | try 'x help'")
