@@ -64,7 +64,7 @@ func HandleArgs() {
 				os.Exit(0)
 			}
 			
-			tweet.POST_tweet(os.Args[1])
+			//tweet.POST_tweet(os.Args[1])  x tweetText
 			
 	}
 }
