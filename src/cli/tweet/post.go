@@ -46,7 +46,6 @@ func postT(url string, t Tweet) {
     }
 
     resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonBytes))
-
     if err != nil {
         fmt.Println("can't reach server to post a tweet")
 		os.Exit(0)
@@ -54,13 +53,20 @@ func postT(url string, t Tweet) {
 
     defer resp.Body.Close()
 
-	_, err = io.ReadAll(resp.Body)
-		if err != nil {
-			//Failed to read response.
-			panic(err)
-		}
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		//Failed to read response.
+		panic(err)
+	}
+
 
 		var r response
+		err = json.Unmarshal(body, &r)
+		if err != nil {
+			fmt.Printf("Failed to unmarshal response")
+			//Failed to unmarshal response.
+			return
+		}
 
 
 		//Convert bytes to String and print
