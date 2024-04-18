@@ -9,7 +9,6 @@ import (
 var (
 	wait string
 	date string
-	time string
 	content string
 )
 
