@@ -19,7 +19,7 @@
 - post tweets from terminal like this
 
 ```bash
-x -t "first tweet from terminal!"
+x "first tweet from terminal!"
 ```
 
 ### Full Docs
@@ -30,6 +30,14 @@ interact with x (twitter) from terminal.
 
 USAGE
   x <command>
+
+Main usage (posting a tweet)
+  x <tweet-text>
+    Examples:
+      one word tweet: x hi
+      multiple words tweet: x "hi from terminal"
+      with optional arg: x -t "hi there"     
+      extended optional arg: x --tweet "hi x"
 
 Commands
   -h             show this help
