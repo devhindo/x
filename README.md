@@ -24,7 +24,7 @@ x "first tweet from terminal!"
 
 ### Full Docs
 
-```text
+```bash
 
 interact with x (twitter) from terminal.
 
@@ -36,7 +36,7 @@ Main usage (posting a tweet)
     Examples:
       one word tweet              x hi
       multiple words tweet        x "hi from terminal"
-      with optional arg:          x -t "hi there"     
+      with optional arg:          x -t "hi there"
       extended optional arg:      x --tweet "hi x"
 
 Commands
