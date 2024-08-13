@@ -1,6 +1,6 @@
 ![preview](./assets/preview.gif)
 
-<div align="center"><i>CLI tool to interact with x (twitter) from terminal</i></div>
+<div align="center"><i>CLI tool to post tweets on x (twitter) from terminal</i></div>
 
 ## Table of Contents
 
