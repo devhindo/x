@@ -1,5 +1,5 @@
 <div align="center"><i>CLI tool to post tweets on x (twitter) from terminal</i></div>
-
+<br>
 ![preview](./assets/preview.gif)
 
 ## Table of Contents
