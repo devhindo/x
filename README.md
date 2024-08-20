@@ -36,7 +36,7 @@ USAGE
 Main usage (posting a tweet)
   x <tweet-text>
     Examples:
-      one word tweet              x hi
+      one word tweet (no spaces)  x hi
       multiple words tweet        x "hi from terminal"
       with optional arg:          x -t "hi there"
       extended optional arg:      x --tweet "hi x"
