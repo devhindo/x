@@ -63,7 +63,7 @@ func postT(url string, t Tweet) {
 		var r response
 		err = json.Unmarshal(body, &r)
 		if err != nil {
-			fmt.Printf("Failed to unmarshal response")
+			fmt.Printf("rate limit reached thanks Elon! Try again tomorrow when it resets, sorry.")
 			//Failed to unmarshal response.
 			return
 		}
