@@ -51,6 +51,9 @@ func HandleArgs() {
 		case "v":
 			checkArgsequals2()
 			Version()
+		case "-v":
+			checkArgsequals2()
+			Version()
 		case "f": //  x -t "hi" 5h6m7s
 			checkArgsequals2()
 			tweet.PostFutureTweet(os.Args)
