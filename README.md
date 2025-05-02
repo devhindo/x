@@ -12,6 +12,7 @@
   - [Windows](#windows)
   - [Mac](#mac)
 - [Authentication](#authentication)
+- [Docs](#docs)
 
 ## Usage
 
@@ -124,3 +125,6 @@ Note: running `x auth -v` windows might flag the tool as a threat this is becaus
 ## Posting tweets
 
 `x -t "tweet text"` or `x --tweet "tweet text"` or `x "hi there!"` or even one word tweet like `x spotifyURL`
+
+## Docs
+[Docs](https://deepwiki.com/devhindo/x)
