@@ -128,3 +128,54 @@ Note: running `x auth -v` windows might flag the tool as a threat this is becaus
 
 ## Docs
 [Docs](https://deepwiki.com/devhindo/x)
+
+## Detailed Documentation
+
+The CLI has been updated to use a more robust command structure.
+
+### Global Options
+- `-h, --help`: Help for any command
+
+### Commands
+
+#### `x [message]`
+Post a tweet directly.
+```bash
+x "Hello World"
+```
+
+#### `tweet` (alias: `t`)
+Post a tweet.
+```bash
+x tweet "Hello World"
+x t "Hello World"
+```
+
+#### `auth`
+Manage authentication.
+- `x auth`: Start authentication flow
+- `x auth --verify` (or `-v`): Verify authentication status
+- `x auth --clear` (or `-c`): Clear stored credentials
+- `x auth --url`: Display the authorization URL
+
+#### `future` (alias: `f`)
+Schedule a tweet for later.
+```bash
+x future "Tweet later" 2h30m
+x f "Tweet later" 5h
+```
+Arguments:
+1. Message: The tweet content
+2. Duration: Time to wait (e.g., "1h", "30m", "1h30m")
+
+#### `version` (alias: `v`)
+Print the CLI version.
+```bash
+x version
+```
+
+### Legacy Support
+The following legacy flag styles are still supported for backward compatibility:
+- `x -t "msg"` -> `x t "msg"`
+- `x -f "msg" "time"` -> `x f "msg" "time"`
+- `x -v` -> `x version`
