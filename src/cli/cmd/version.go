@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/devhindo/x/src/cli/x"
+	"fmt"
 	"github.com/spf13/cobra"
 )
 
@@ -10,7 +10,7 @@ var versionCmd = &cobra.Command{
 	Short:   "Print version",
 	Aliases: []string{"v"},
 	Run: func(cmd *cobra.Command, args []string) {
-		x.Version()
+		fmt.Println("x CLI v1.0.0 (Local)")
 	},
 }
 
