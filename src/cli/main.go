@@ -1,8 +1,9 @@
 package main
 
-import "github.com/devhindo/x/src/cli/x"
+import "github.com/devhindo/x/src/cli/cmd"
 
 
 func main() {
-	x.Run()
+	//x.Run()
+	cmd.Execute()
 }
