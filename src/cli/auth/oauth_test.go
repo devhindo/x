@@ -46,13 +46,13 @@ func TestGenerateCodeVerifier(t *testing.T) {
 func TestGenerateCodeChallenge(t *testing.T) {
 	u := &User{}
 	// Set a fixed verifier for reproducibility
-	u.Code_verifier = "hello_world_verifier_1234567890" 
-	
+	u.Code_verifier = "hello_world_verifier_1234567890"
+
 	// sha256("hello_world_verifier_1234567890")
 	// echo -n "hello_world_verifier_1234567890" | openssl sha256 -binary | base64
 	// hash = 84c3c33379967676e828114f851080d859e3557451965b1285268c375531d041
 	// Base64URL(hash) (without padding)
-	
+
 	u.generate_code_challenge()
 
 	// Verify the result
@@ -72,17 +72,17 @@ func TestGenerateState(t *testing.T) {
 
 	// The implementation generates random bytes of 'length' then Base64 URL encodes them.
 	// So the resulting string length will be roughly length * 4/3.
-	
+
 	if u.State == "" {
 		t.Error("generate_state() produced empty state")
 	}
-	
+
 	// Decode back to check byte length
-	decoded, err := base64.URLEncoding.DecodeString(u.State)
+	decoded, err := base64.RawURLEncoding.DecodeString(u.State)
 	if err != nil {
 		t.Errorf("generate_state() produced invalid base64: %v", err)
 	}
-	
+
 	if len(decoded) != length {
 		t.Errorf("generate_state() decoded length = %d, want %d", len(decoded), length)
 	}

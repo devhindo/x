@@ -3,8 +3,8 @@ package auth
 import (
 	"fmt"
 
-	"github.com/devhindo/x/src/cli/utils"
 	"github.com/devhindo/x/src/cli/lock"
+	"github.com/devhindo/x/src/cli/utils"
 )
 
 type User struct {
@@ -32,7 +32,7 @@ func (u *User) add_user_to_db() {
 	if status != 200 {
 		fmt.Println("error adding user")
 	} else {
-		
+
 		err := lock.WriteLicenseKeyToFile(u.License)
 		if err != nil {
 			fmt.Println("coudln't write license key to file")
