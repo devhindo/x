@@ -4,26 +4,40 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/devhindo/x/src/cli/lock"
+	"github.com/devhindo/x/src/cli/config"
 )
 
-// func check_authentication() {}
-
 func Auth() {
-
-	checkIfUserExists()
-
-	u := newUser()
-	u.add_user_to_db()
-	u.open_browser_to_auth_url()
-	fmt.Println("please authorize X CLI in your browser then run 'x auth --verify'")
-	fmt.Println("if the browser does not open, run 'x auth --url` to get the authorization url")
-}
-
-func checkIfUserExists() {
-	_, err := lock.ReadLicenseKeyFromFile()
-	if err == nil {
-		fmt.Println("a user is already logged in | try 'x -h'")
-		os.Exit(0)
+	cfg, err := config.LoadConfig()
+	if err != nil {
+		fmt.Println("Error loading config:", err)
+		os.Exit(1)
 	}
+
+	if len(cfg.Apps) == 0 {
+		fmt.Println("No apps found. Run 'x init add' first.")
+		os.Exit(1)
+	}
+
+	app := cfg.GetActiveApp()
+	if app == nil {
+		// Fallback to first app if active not set
+		if len(cfg.Apps) > 0 {
+			app = &cfg.Apps[0]
+			cfg.ActiveApp = app.Name
+			config.SaveConfig(cfg)
+		} else {
+			fmt.Println("No apps found. Run 'x init add' first.")
+			os.Exit(1)
+		}
+	}
+
+	fmt.Printf("Authenticating app '%s'...\n", app.Name)
+	err = StartAuthFlow(app)
+	if err != nil {
+		fmt.Println("Authentication failed:", err)
+		os.Exit(1)
+	}
+
+	fmt.Println("Authentication successful! You can now use 'x tweet'.")
 }

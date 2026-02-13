@@ -1,67 +1,33 @@
 package clear
 
 import (
-	"bytes"
-	"encoding/json"
 	"fmt"
-	"net/http"
 	"os"
-	
-	"github.com/devhindo/x/src/cli/lock"
+
+	"github.com/devhindo/x/src/cli/config"
 )
 
 func StartOver() {
-
-	license, err := lock.ReadLicenseKeyFromFile()
-
+	cfg, err := config.LoadConfig()
 	if err != nil {
-		fmt.Println("no user logged in")
+		fmt.Println("Error loading config:", err)
+		os.Exit(1)
+	}
+
+	app := cfg.GetActiveApp()
+	if app == nil {
+		fmt.Println("No active app found.")
 		return
 	}
 
-	delete_user_from_db(license)
+	app.User = nil
+	cfg.AddApp(*app) // Update app
 
-	lock.ClearLicenseFile()
-
-	fmt.Println("user deleted successfully")
-
-}
-
-// is there anyway better to pass license?
-type License struct {
-	License string `json:"license"`
-}
-
-func delete_user_from_db(license string) {
-
-	l := License{
-		License: license,
+	err = config.SaveConfig(cfg)
+	if err != nil {
+		fmt.Println("Error clearing user:", err)
+		os.Exit(1)
 	}
 
-	url := "https://x-blush.vercel.app/api/user/delete"
-
-	status := post(url, l)
-
-	if status != 200 {
-		fmt.Println("error deleting user from db")
-	}
-}
-
-func post(url string, l License) int {
-
-    jsonBytes, err := json.Marshal(l)
-    if err != nil {
-        panic(err)
-    }
-
-    resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonBytes))
-
-    if err != nil {
-        fmt.Println("can't reach server to clear user")
-		os.Exit(0)
-    }
-
-    defer resp.Body.Close()
-
-    return resp.StatusCode
+	fmt.Println("User session cleared successfully.")
 }

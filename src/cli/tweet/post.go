@@ -7,68 +7,73 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"time"
 
-	"github.com/devhindo/x/src/cli/lock"
+	"github.com/devhindo/x/src/cli/auth"
+	"github.com/devhindo/x/src/cli/config"
 )
 
 type Tweet struct {
-	License string `json:"license"`
-	Tweet   string `json:"tweet"`
+	Text string `json:"text"`
 }
 
 func POST_tweet(t string) {
-
-	license, err := lock.ReadLicenseKeyFromFile()
-
+	cfg, err := config.LoadConfig()
 	if err != nil {
-		fmt.Println("you are not authenticated | try 'x auth'")
+		fmt.Println("Error loading config:", err)
 		os.Exit(1)
 	}
 
-	url := "https://x-blush.vercel.app/api/tweets/post"
-	tweet := Tweet{
-		License: license,
-		Tweet:   t,
+	app := cfg.GetActiveApp()
+	if app == nil || app.User == nil {
+		fmt.Println("No active app or user not authenticated. Run 'x init use' or 'x auth'.")
+		os.Exit(1)
 	}
-	
-	postT(url, tweet)
-}
 
-type response struct {
-    Message string `json:"message"`
-}
+	if time.Now().After(app.User.Expiry) {
+		fmt.Println("Token expired, refreshing...")
+		if err := auth.RefreshToken(app); err != nil {
+			fmt.Println("Error refreshing token:", err)
+			os.Exit(1)
+		}
+	}
 
-func postT(url string, t Tweet) {
+	url := "https://api.twitter.com/2/tweets"
+	tweet := Tweet{
+		Text: t,
+	}
 
-    jsonBytes, err := json.Marshal(t)
-    if err != nil {
-        panic(err)
-    }
-
-    resp, err := http.Post(url, "application/json", bytes.NewBuffer(jsonBytes))
-    if err != nil {
-        fmt.Println("can't reach server to post a tweet")
-		os.Exit(0)
-    }
-
-    defer resp.Body.Close()
-
-	body, err := io.ReadAll(resp.Body)
+	jsonBytes, err := json.Marshal(tweet)
 	if err != nil {
-		//Failed to read response.
 		panic(err)
 	}
 
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonBytes))
+	if err != nil {
+		fmt.Println("Error creating request:", err)
+		os.Exit(1)
+	}
 
-		var r response
-		err = json.Unmarshal(body, &r)
-		if err != nil {
-			fmt.Printf("rate limit reached thanks Elon! Try again tomorrow when it resets, sorry.")
-			//Failed to unmarshal response.
-			return
-		}
+	req.Header.Set("Authorization", "Bearer "+app.User.AccessToken)
+	req.Header.Set("Content-Type", "application/json")
 
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("Error posting tweet:", err)
+		os.Exit(1)
+	}
+	defer resp.Body.Close()
 
-		//Convert bytes to String and print
-		fmt.Println(r.Message)
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		panic(err)
+	}
+
+	if resp.StatusCode != 201 {
+		fmt.Printf("Error posting tweet: %s\n", string(body))
+		os.Exit(1)
+	}
+
+	fmt.Println("Tweet posted successfully! 🐦")
 }

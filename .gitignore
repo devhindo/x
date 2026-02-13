@@ -26,3 +26,4 @@ doc
 play
 dist/
 .vscode
+cli
